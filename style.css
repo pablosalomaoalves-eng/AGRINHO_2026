@@ -403,6 +403,38 @@ ul { list-style: none; }
     z-index: 1;
 }
 
+/* Placeholder visível quando imagem não carrega */
+.img-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--verde-campo);
+    z-index: 0;
+}
+
+.img-placeholder i {
+    font-size: 4rem;
+    color: var(--verde-eletrico);
+    filter: drop-shadow(0 0 16px rgba(74, 222, 128, 0.5));
+    animation: pulseIcon 2.5s ease-in-out infinite;
+}
+
+.img-placeholder span {
+    font-size: 0.88rem;
+    color: var(--cinza-texto);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+@keyframes pulseIcon {
+    0%, 100% { transform: scale(1);   opacity: 1;    }
+    50%       { transform: scale(1.1); opacity: 0.75; }
+}
+
 /* Brilho sutil no canto superior */
 .conteudo-grid .imagem::after {
     content: '';
