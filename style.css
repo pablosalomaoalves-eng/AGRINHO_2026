@@ -358,11 +358,62 @@ ul { list-style: none; }
     line-height: 1.8;
 }
 
+/* Wrapper da imagem — garante proporção mesmo sem arquivo */
+.conteudo-grid .imagem {
+    position: relative;
+    border-radius: var(--raio-card);
+    overflow: hidden;
+    border: 1px solid rgba(74, 222, 128, 0.22);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    background: var(--verde-campo);
+    aspect-ratio: 4 / 3;
+}
+
 .conteudo-grid .imagem img {
     width: 100%;
-    border-radius: var(--raio-card);
-    border: 1px solid rgba(74, 222, 128, 0.2);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    display: block;
+}
+
+/* Placeholder elegante quando a imagem não carrega */
+.conteudo-grid .imagem img[alt]::after,
+.conteudo-grid .imagem:not(:has(img[src])) {
+    content: '';
+}
+
+.conteudo-grid .imagem::before {
+    content: '🤖';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.conteudo-grid .imagem img {
+    position: relative;
+    z-index: 1;
+}
+
+/* Brilho sutil no canto superior */
+.conteudo-grid .imagem::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--verde-eletrico), transparent);
+    opacity: 0.6;
+    z-index: 2;
 }
 
 /* ============================================================
