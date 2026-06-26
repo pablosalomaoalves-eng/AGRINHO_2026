@@ -600,62 +600,75 @@ ul   { list-style: none; }
     background: var(--surface);
     border: 1px solid var(--borda);
     border-radius: var(--radius);
-    padding: 2rem 2rem 1.5rem;
+    padding: 2.5rem 2rem 1.8rem;
 }
 .grafico-painel.ativo { display: block; }
 
-/* barras */
+/* área das barras */
 .barras {
     display: flex;
     align-items: flex-end;
-    justify-content: center;
-    gap: 2.5rem;
-    height: 240px;
-    margin-bottom: 1rem;
+    justify-content: space-around;
+    height: 220px;
+    gap: 1rem;
+    margin-bottom: 0;
 }
+
+/* cada grupo (ex: Tratores) */
 .barra-grupo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
     flex: 1;
-    max-width: 100px;
 }
-.barra-wrap {
-    width: 100%;
+
+/* par de barras lado a lado */
+.barra-par {
     display: flex;
     align-items: flex-end;
+    gap: 5px;
+    height: 190px;
+    width: 100%;
     justify-content: center;
-    gap: 8px;
-    height: 200px;
 }
+
+/* barra individual */
 .barra {
-    flex: 1;
-    border-radius: 6px 6px 0 0;
+    width: 28px;
+    border-radius: 5px 5px 0 0;
     position: relative;
-    transition: opacity 0.2s;
-    cursor: default;
-    max-width: 38px;
+    transition: filter 0.2s;
+    flex-shrink: 0;
 }
-.barra:hover { opacity: 0.85; }
-.barra.diesel { background: rgba(248,113,113,0.7); border: 1px solid rgba(248,113,113,0.9); }
-.barra.eletrico { background: var(--verde); border: 1px solid #86efac;
-    box-shadow: 0 0 12px rgba(74,222,128,0.25); }
+.barra:hover { filter: brightness(1.2); }
+
+.barra.diesel {
+    background: rgba(248, 113, 113, 0.75);
+    border: 1px solid rgba(248, 113, 113, 0.95);
+}
+.barra.eletrico {
+    background: var(--verde);
+    border: 1px solid #86efac;
+    box-shadow: 0 0 10px rgba(74,222,128,0.3);
+}
 
 .barra-valor {
     position: absolute;
-    top: -1.5rem;
+    top: -1.4rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 700;
     white-space: nowrap;
     color: #fff;
 }
+
+/* label abaixo do grupo */
 .barra-label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--texto-dim);
     text-align: center;
+    margin-top: 0.5rem;
     line-height: 1.3;
 }
 
@@ -664,7 +677,7 @@ ul   { list-style: none; }
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-top: 1.2rem;
+    margin-top: 1.4rem;
     padding-top: 1rem;
     border-top: 1px solid var(--borda);
 }
@@ -678,6 +691,7 @@ ul   { list-style: none; }
 .legenda-cor {
     width: 12px; height: 12px;
     border-radius: 3px;
+    flex-shrink: 0;
 }
 .legenda-cor.diesel   { background: rgba(248,113,113,0.8); }
 .legenda-cor.eletrico { background: var(--verde); }
