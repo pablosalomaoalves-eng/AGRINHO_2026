@@ -248,40 +248,90 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ============================================================
-   4. ANIMAÇÃO DE ENTRADA DOS CARDS (Intersection Observer)
+   4. ANIMAÇÕES DE SCROLL — SITE INTEIRO
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const prefereReducao = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  if (prefereReducao) return; // respeita preferência do usuário
+  // Cada seletor tem uma animação de entrada diferente
+  const grupos = [
+    // sobe de baixo — padrão
+    {
+      seletores: [
+        '.secao h2', '.secao-eyebrow', '.simulador h2',
+        '.simulador > .container > p', '.calculadora',
+        '.secao.impacto p', '.grafico', '.contato h2',
+        '.introducao h2', '.introducao p',
+        '.strip .pill', '.pill-text',
+        'section img',
+      ],
+      from: 'translateY(36px)',
+    },
+    // vem da esquerda
+    {
+      seletores: ['.conteudo-grid .texto', '.banner-overlay h2', '.banner-overlay p'],
+      from: 'translateX(-36px)',
+    },
+    // vem da direita
+    {
+      seletores: ['.conteudo-grid .imagem'],
+      from: 'translateX(36px)',
+    },
+    // escala + fade (cards, pills icon, form)
+    {
+      seletores: ['.card', '.pill-icon', '.contato form input', '.contato form textarea', '.contato form button'],
+      from: 'translateY(24px) scale(0.96)',
+    },
+  ];
 
-  const elementos = document.querySelectorAll('.card, .conteudo-grid, .simulador .calculadora');
+  const DURACAO  = '0.6s';
+  const EASING   = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
-  // Estado inicial: invisível e deslocado
-  elementos.forEach(el => {
-    el.style.opacity   = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+  // Aplica estado inicial em todos os elementos
+  grupos.forEach(({ seletores, from }) => {
+    seletores.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        // Não animar elementos dentro do banner (já visíveis no carregamento)
+        if (el.closest('.banner')) return;
+        el.style.opacity   = '0';
+        el.style.transform = from;
+        el.style.transition = `opacity ${DURACAO} ${EASING}, transform ${DURACAO} ${EASING}`;
+        el.dataset.animFrom = from;
+      });
+    });
   });
 
+  // Observer que aciona a animação ao entrar na viewport
   const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada, i) => {
-      if (entrada.isIntersecting) {
-        // Atraso escalonado para cards em sequência
-        const delay = (i % 4) * 80;
-        setTimeout(() => {
-          entrada.target.style.opacity   = '1';
-          entrada.target.style.transform = 'translateY(0)';
-        }, delay);
-        observer.unobserve(entrada.target);
-      }
-    });
-  }, { threshold: 0.12 });
+    entradas.forEach((entrada) => {
+      if (!entrada.isIntersecting) return;
 
-  elementos.forEach(el => observer.observe(el));
+      const el    = entrada.target;
+      // Atraso escalonado para irmãos (cards em sequência)
+      const irmaos = el.parentElement
+        ? Array.from(el.parentElement.children).filter(c => c.dataset.animFrom)
+        : [];
+      const idx   = irmaos.indexOf(el);
+      const delay = idx >= 0 ? idx * 80 : 0;
+
+      setTimeout(() => {
+        el.style.opacity   = '1';
+        el.style.transform = 'translateY(0) translateX(0) scale(1)';
+      }, delay);
+
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  // Observa todos os elementos marcados
+  document.querySelectorAll('[data-anim-from]').forEach(el => observer.observe(el));
+
+  // Também observa elementos adicionados dinamicamente (ex: resultado do simulador)
+  const mutObs = new MutationObserver(() => {
+    document.querySelectorAll('[data-anim-from]').forEach(el => observer.observe(el));
+  });
+  mutObs.observe(document.body, { childList: true, subtree: true });
 });
 
 
