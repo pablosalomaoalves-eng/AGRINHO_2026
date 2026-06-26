@@ -324,3 +324,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+/* ============================================================
+   7. GRÁFICO COMPARATIVO — TROCA DE ABAS
+   ============================================================ */
+
+function trocarAba(id, btn) {
+    // Painéis
+    document.querySelectorAll('.grafico-painel').forEach(p => p.classList.remove('ativo'));
+    document.getElementById('painel-' + id).classList.add('ativo');
+
+    // Botões
+    document.querySelectorAll('.grafico-tab').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+}
