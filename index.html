@@ -1,306 +1,218 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campo Autônomo | Agro Elétrico Inteligente</title>
-
-    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Ícones -->
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
 
-    <!-- ================= HEADER ================= -->
+    <!-- HEADER -->
     <header class="topo">
-
         <div class="logo">
-            <h1>⚡ Campo Autônomo</h1>
+            <h1>⚡ Campo <span>Autônomo</span></h1>
         </div>
-
         <nav class="menu">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#frota">Frota Elétrica</a></li>
-                <li><a href="#automacao">Automação</a></li>
-                <li><a href="#energia">Energia</a></li>
+                <li><a href="#home">Soluções</a></li>
+                <li><a href="#frota">Tecnologia</a></li>
+                <li><a href="#automacao">Sustentabilidade</a></li>
+                <li><a href="#energia">Sobre nós</a></li>
                 <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
-
+        <a href="#frota" class="btn">Veja a Frota em Ação</a>
     </header>
 
-    <!-- ================= BANNER PRINCIPAL ================= -->
+    <!-- HERO -->
     <section id="home" class="banner">
 
+        <div class="float-badges">
+            <div class="float-badge"><i class="fa-solid fa-leaf"></i> Zero Emissões</div>
+            <div class="float-badge"><i class="fa-solid fa-bolt"></i> 100% Elétrico</div>
+        </div>
+
         <div class="banner-overlay">
+            <div class="badge"><i class="fa-solid fa-circle-check"></i> Certificado Agro Sustentável</div>
 
-            <h2>Campo Autônomo, Planeta Limpo</h2>
+            <h2>Campo Autônomo,<br><span>Planeta Limpo</span></h2>
 
-            <p>
-                O futuro do agronegócio será elétrico, inteligente e livre de combustíveis fósseis.
-            </p>
+            <p>O futuro do agronegócio será elétrico, inteligente e livre de combustíveis fósseis.</p>
 
-            <a href="#frota" class="btn">
-                Veja a Frota em Ação
-            </a>
-
-        </div>
-
-    </section>
-
-    <!-- ================= INTRODUÇÃO ================= -->
-    <section class="introducao">
-
-        <div class="container">
-
-            <h2>O Agro da Nova Geração</h2>
-
-            <p>
-                A substituição do diesel por máquinas elétricas autônomas
-                reduz custos operacionais, elimina emissões de carbono e
-                transforma fazendas em ecossistemas inteligentes conectados
-                por inteligência artificial e energia renovável.
-            </p>
-
-        </div>
-
-    </section>
-
-    <!-- ================= SEÇÃO 1 ================= -->
-    <section id="frota" class="secao">
-
-        <div class="container">
-
-            <h2>⚡ Revolução das Máquinas Elétricas</h2>
-
-            <div class="cards">
-
-                <div class="card">
-                    <i class="fa-solid fa-bolt"></i>
-                    <h3>Eficiência Energética</h3>
-                    <p>
-                        Motores elétricos consomem menos energia e possuem
-                        manutenção muito mais simples que motores a diesel.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <i class="fa-solid fa-tractor"></i>
-                    <h3>Tratores Autônomos</h3>
-                    <p>
-                        Máquinas inteligentes operam via satélite durante
-                        24 horas sem intervenção humana direta.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <i class="fa-solid fa-leaf"></i>
-                    <h3>Emissão Zero</h3>
-                    <p>
-                        Eliminação completa da fumaça tóxica e vazamentos
-                        de óleo no campo.
-                    </p>
-                </div>
-
+            <div class="banner-btns">
+                <a href="#frota" class="btn">Veja a Frota em Ação <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#contato" class="btn-outline">Saiba Mais</a>
             </div>
 
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-val">65%</div>
+                    <div class="stat-label">Redução de custo</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val">Zero</div>
+                    <div class="stat-label">Emissões de CO₂</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val">24h</div>
+                    <div class="stat-label">Operação autônoma</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-cue">
+            <span>Role para explorar</span>
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
         </div>
 
     </section>
 
-    <!-- ================= SEÇÃO 2 ================= -->
-    <section id="automacao" class="secao destaque">
-
-        <div class="container">
-
-            <h2>🤖 Inteligência Artificial e Automação</h2>
-
-            <div class="conteudo-grid">
-
-                <div class="texto">
-                    <p>
-                        Sensores inteligentes, radares e sistemas de GPS
-                        permitem operações agrícolas precisas com mínima
-                        perda de recursos.
-                    </p>
-
-                    <p>
-                        Robôs agrícolas conseguem remover ervas daninhas,
-                        monitorar plantações e otimizar o uso de água.
-                    </p>
-                </div>
-
-
-                <div class="imagem">
-                    <img src="img/robo-agricola.jpg"
-                    alt="Robô agrícola inteligente">
-   onerror="this.style.display='none'">
-    <div class="img-placeholder">
-        <i class="fa-solid fa-robot"></i>
-        <span>Robô agrícola inteligente</span>
+    <!-- STRIP -->
+    <div class="strip">
+        <div class="strip-inner">
+            <div class="pill">
+                <div class="pill-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div class="pill-text"><strong>Sustentável</strong><span>Zero emissões e cuidado com o planeta.</span></div>
+            </div>
+            <div class="pill">
+                <div class="pill-icon"><i class="fa-solid fa-robot"></i></div>
+                <div class="pill-text"><strong>Autônomo</strong><span>Tecnologia inteligente que trabalha por você.</span></div>
+            </div>
+            <div class="pill">
+                <div class="pill-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="pill-text"><strong>Eficiente</strong><span>Mais produtividade com menos recursos.</span></div>
+            </div>
+            <div class="pill">
+                <div class="pill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="pill-text"><strong>Seguro</strong><span>Operação precisa e segura em qualquer terreno.</span></div>
+            </div>
+        </div>
     </div>
-                </div>
 
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- ================= SEÇÃO 3 ================= -->
-    <section id="energia" class="secao">
-
+    <!-- FROTA -->
+    <section id="frota" class="secao">
         <div class="container">
-
-            <h2>☀️ Autossuficiência Energética</h2>
-
+            <div class="secao-eyebrow">Frota Elétrica</div>
+            <h2>⚡ Revolução das Máquinas Elétricas</h2>
             <div class="cards">
-
                 <div class="card">
-                    <i class="fa-solid fa-solar-panel"></i>
+                    <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Eficiência Energética</h3>
+                    <p>Motores elétricos consomem menos energia e possuem manutenção muito mais simples que motores a diesel.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-tractor"></i></div>
+                    <h3>Tratores Autônomos</h3>
+                    <p>Máquinas inteligentes operam via satélite durante 24 horas sem intervenção humana direta.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h3>Emissão Zero</h3>
+                    <p>Eliminação completa da fumaça tóxica e vazamentos de óleo no campo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTOMAÇÃO -->
+    <section id="automacao" class="secao destaque">
+        <div class="container">
+            <div class="secao-eyebrow">Inteligência Artificial</div>
+            <h2>🤖 Automação de Alta Precisão</h2>
+            <div class="conteudo-grid">
+                <div class="texto">
+                    <p>Sensores inteligentes, radares e sistemas de GPS permitem operações agrícolas precisas com mínima perda de recursos.</p>
+                    <p>Robôs agrícolas conseguem remover ervas daninhas, monitorar plantações e otimizar o uso de água em tempo real.</p>
+                </div>
+                <div class="imagem">
+                    <div class="img-placeholder">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>Robô agrícola inteligente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENERGIA -->
+    <section id="energia" class="secao">
+        <div class="container">
+            <div class="secao-eyebrow">Energia Renovável</div>
+            <h2>☀️ Autossuficiência Energética</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-solar-panel"></i></div>
                     <h3>Energia Solar</h3>
-                    <p>
-                        Fazendas transformadas em usinas solares para
-                        abastecer robôs e veículos elétricos.
-                    </p>
+                    <p>Fazendas transformadas em usinas solares para abastecer robôs e veículos elétricos.</p>
                 </div>
-
                 <div class="card">
-                    <i class="fa-solid fa-wind"></i>
+                    <div class="card-icon"><i class="fa-solid fa-wind"></i></div>
                     <h3>Energia Eólica</h3>
-                    <p>
-                        Turbinas eólicas complementam a geração energética
-                        sustentável no campo.
-                    </p>
+                    <p>Turbinas eólicas complementam a geração energética sustentável no campo.</p>
                 </div>
-
                 <div class="card">
-                    <i class="fa-solid fa-battery-full"></i>
+                    <div class="card-icon"><i class="fa-solid fa-battery-full"></i></div>
                     <h3>Bancos de Baterias</h3>
-                    <p>
-                        Armazenamento inteligente garante funcionamento
-                        contínuo mesmo sem sol ou vento.
-                    </p>
+                    <p>Armazenamento inteligente garante funcionamento contínuo mesmo sem sol ou vento.</p>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-    <!-- ================= SIMULADOR ================= -->
+    <!-- SIMULADOR -->
     <section class="simulador">
-
         <div class="container">
-
-            <h2>📊 Simulador de Economia de Diesel</h2>
-
-            <p>
-                Descubra quanto sua fazenda pode economizar ao migrar
-                para máquinas elétricas.
-            </p>
-
+            <div class="secao-eyebrow">Simulador</div>
+            <h2>📊 Calcule sua Economia</h2>
+            <p>Descubra quanto sua fazenda pode economizar ao migrar para máquinas elétricas.</p>
             <div class="calculadora">
-
-                <input type="number"
-                id="diesel"
-                placeholder="Gasto mensal com diesel">
-
-                <button onclick="calcularEconomia()">
-                    Calcular Economia
-                </button>
-
+                <div class="input-wrap">
+                    <span class="input-prefix">R$</span>
+                    <input type="number" id="diesel" placeholder="Gasto mensal com diesel (ex: 8500)">
+                </div>
+                <button onclick="calcularEconomia()">Calcular Economia</button>
                 <div id="resultado"></div>
-
             </div>
-
         </div>
-
     </section>
 
-    <!-- ================= IMPACTO ECOLÓGICO ================= -->
+    <!-- IMPACTO -->
     <section class="secao impacto">
-
         <div class="container">
-
+            <div class="secao-eyebrow" style="text-align:center">Meio Ambiente</div>
             <h2>🌱 Impacto Ecológico Zero</h2>
-
-            <p>
-                Robôs leves preservam a estrutura do solo e reduzem a
-                compactação causada por tratores pesados tradicionais.
-            </p>
-
-            <div class="grafico">
-                <!-- Futuro gráfico comparativo -->
-            </div>
-
+            <p>Robôs leves preservam a estrutura do solo e reduzem a compactação causada por tratores pesados tradicionais.</p>
+            <div class="grafico"></div>
         </div>
-
     </section>
 
-    <!-- ================= CONTATO ================= -->
+    <!-- CONTATO -->
     <section id="contato" class="contato">
-
         <div class="container">
-
+            <div class="secao-eyebrow">Fale conosco</div>
             <h2>📩 Conecte-se com o Agro do Futuro</h2>
-
             <form>
-
-                <input type="text"
-                placeholder="Nome"
-                required>
-
-                <input type="email"
-                placeholder="E-mail"
-                required>
-
-                <input type="text"
-                placeholder="Empresa">
-
-                <textarea
-                placeholder="Mensagem"></textarea>
-
-                <button type="submit">
-                    Enviar Proposta
-                </button>
-
+                <input type="text" placeholder="Nome" required>
+                <input type="email" placeholder="E-mail" required>
+                <input type="text" placeholder="Empresa" style="grid-column:1/-1">
+                <textarea placeholder="Mensagem"></textarea>
+                <button type="submit">Enviar Proposta</button>
             </form>
-
         </div>
-
     </section>
 
-    <!-- ================= RODAPÉ ================= -->
+    <!-- RODAPÉ -->
     <footer class="rodape">
-
-        <p>
-            © 2026 Campo Autônomo • Agronegócio Inteligente e Sustentável
-        </p>
-
+        <p>© 2026 Campo Autônomo • Agronegócio Inteligente e Sustentável</p>
         <div class="redes">
-
             <a href="#"><i class="fa-brands fa-youtube"></i></a>
-
             <a href="#"><i class="fa-brands fa-instagram"></i></a>
-
             <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-
         </div>
-
     </footer>
 
-    <!-- ================= JAVASCRIPT ================= -->
     <script src="script.js"></script>
-
 </body>
 </html>
-```
