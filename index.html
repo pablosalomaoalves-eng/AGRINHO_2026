@@ -8,14 +8,139 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- SVG icon sprite -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <!-- bolt / lightning -->
+        <symbol id="ico-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </symbol>
+        <!-- leaf -->
+        <symbol id="ico-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </symbol>
+        <!-- robot / cpu -->
+        <symbol id="ico-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="10" rx="2"/>
+            <circle cx="12" cy="5" r="2"/>
+            <path d="M12 7v4"/>
+            <line x1="8" y1="16" x2="8" y2="16"/>
+            <line x1="16" y1="16" x2="16" y2="16"/>
+        </symbol>
+        <!-- chart-line -->
+        <symbol id="ico-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </symbol>
+        <!-- shield -->
+        <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </symbol>
+        <!-- check-circle -->
+        <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+        </symbol>
+        <!-- arrow-right -->
+        <symbol id="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+        </symbol>
+        <!-- tractor -->
+        <symbol id="ico-tractor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 4h9l1 7H3z"/>
+            <circle cx="7" cy="17" r="3"/>
+            <circle cx="17" cy="18" r="2"/>
+            <path d="M13 11h5l2 4-2.5 2"/>
+        </symbol>
+        <!-- solar panel -->
+        <symbol id="ico-solar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <line x1="12" y1="6" x2="12" y2="18"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <line x1="7" y1="6" x2="7" y2="18"/>
+            <line x1="17" y1="6" x2="17" y2="18"/>
+        </symbol>
+        <!-- wind -->
+        <symbol id="ico-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+            <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+            <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+        </symbol>
+        <!-- battery -->
+        <symbol id="ico-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="6" width="18" height="12" rx="2"/>
+            <line x1="23" y1="13" x2="23" y2="11"/>
+            <line x1="6" y1="10" x2="6" y2="14"/>
+            <line x1="10" y1="10" x2="10" y2="14"/>
+            <line x1="14" y1="10" x2="14" y2="14"/>
+        </symbol>
+        <!-- bar-chart -->
+        <symbol id="ico-bar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="2" y1="20" x2="22" y2="20"/>
+        </symbol>
+        <!-- seedling -->
+        <symbol id="ico-seedling" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12"/>
+            <path d="M12 12C12 6 7 3 2 4c1 5 4 8 10 8z"/>
+            <path d="M12 12c0-6 5-9 10-8-1 5-4 8-10 8z"/>
+        </symbol>
+        <!-- send / paper-plane -->
+        <symbol id="ico-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </symbol>
+        <!-- youtube -->
+        <symbol id="ico-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+        </symbol>
+        <!-- instagram -->
+        <symbol id="ico-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/>
+        </symbol>
+        <!-- linkedin -->
+        <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+        </symbol>
+        <!-- warning triangle -->
+        <symbol id="ico-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </symbol>
+        <!-- coin / money -->
+        <symbol id="ico-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/>
+        </symbol>
+        <!-- calendar -->
+        <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+        </symbol>
+        <!-- droplet -->
+        <symbol id="ico-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </symbol>
+    </svg>
 </head>
 <body>
 
     <!-- HEADER -->
     <header class="topo">
         <div class="logo">
-            <h1>⚡ Campo <span>Autônomo</span></h1>
+            <svg class="logo-icon" viewBox="0 0 24 24"><use href="#ico-bolt"/></svg>
+            <h1>Campo <span>Autônomo</span></h1>
         </div>
         <nav class="menu">
             <ul>
@@ -26,26 +151,41 @@
                 <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
-        <a href="#frota" class="btn">Veja a Frota em Ação</a>
+        <a href="#frota" class="btn">
+            Veja a Frota em Ação
+            <svg class="btn-icon"><use href="#ico-arrow"/></svg>
+        </a>
     </header>
 
     <!-- HERO -->
     <section id="home" class="banner">
 
         <div class="float-badges">
-            <div class="float-badge"><i class="fa-solid fa-leaf"></i> Zero Emissões</div>
-            <div class="float-badge"><i class="fa-solid fa-bolt"></i> 100% Elétrico</div>
+            <div class="float-badge">
+                <svg class="fbadge-icon"><use href="#ico-leaf"/></svg>
+                Zero Emissões
+            </div>
+            <div class="float-badge">
+                <svg class="fbadge-icon"><use href="#ico-bolt"/></svg>
+                100% Elétrico
+            </div>
         </div>
 
         <div class="banner-overlay">
-            <div class="badge"><i class="fa-solid fa-circle-check"></i> Certificado Agro Sustentável</div>
+            <div class="badge">
+                <svg class="badge-icon"><use href="#ico-check"/></svg>
+                Certificado Agro Sustentável
+            </div>
 
             <h2>Campo Autônomo,<br><span>Planeta Limpo</span></h2>
 
             <p>O futuro do agronegócio será elétrico, inteligente e livre de combustíveis fósseis.</p>
 
             <div class="banner-btns">
-                <a href="#frota" class="btn">Veja a Frota em Ação <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#frota" class="btn">
+                    Veja a Frota em Ação
+                    <svg class="btn-icon"><use href="#ico-arrow"/></svg>
+                </a>
                 <a href="#contato" class="btn-outline">Saiba Mais</a>
             </div>
 
@@ -76,19 +216,27 @@
     <div class="strip">
         <div class="strip-inner">
             <div class="pill">
-                <div class="pill-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div class="pill-icon">
+                    <svg class="pill-svg"><use href="#ico-leaf"/></svg>
+                </div>
                 <div class="pill-text"><strong>Sustentável</strong><span>Zero emissões e cuidado com o planeta.</span></div>
             </div>
             <div class="pill">
-                <div class="pill-icon"><i class="fa-solid fa-robot"></i></div>
+                <div class="pill-icon">
+                    <svg class="pill-svg"><use href="#ico-robot"/></svg>
+                </div>
                 <div class="pill-text"><strong>Autônomo</strong><span>Tecnologia inteligente que trabalha por você.</span></div>
             </div>
             <div class="pill">
-                <div class="pill-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="pill-icon">
+                    <svg class="pill-svg"><use href="#ico-chart"/></svg>
+                </div>
                 <div class="pill-text"><strong>Eficiente</strong><span>Mais produtividade com menos recursos.</span></div>
             </div>
             <div class="pill">
-                <div class="pill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="pill-icon">
+                    <svg class="pill-svg"><use href="#ico-shield"/></svg>
+                </div>
                 <div class="pill-text"><strong>Seguro</strong><span>Operação precisa e segura em qualquer terreno.</span></div>
             </div>
         </div>
@@ -98,20 +246,29 @@
     <section id="frota" class="secao">
         <div class="container">
             <div class="secao-eyebrow">Frota Elétrica</div>
-            <h2><i class="fa-solid fa-bolt"></i> Revolução das Máquinas Elétricas</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-bolt"/></svg>
+                Revolução das Máquinas Elétricas
+            </h2>
             <div class="cards">
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-bolt"/></svg>
+                    </div>
                     <h3>Eficiência Energética</h3>
                     <p>Motores elétricos consomem menos energia e possuem manutenção muito mais simples que motores a diesel.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-tractor"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-tractor"/></svg>
+                    </div>
                     <h3>Tratores Autônomos</h3>
                     <p>Máquinas inteligentes operam via satélite durante 24 horas sem intervenção humana direta.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-leaf"/></svg>
+                    </div>
                     <h3>Emissão Zero</h3>
                     <p>Eliminação completa da fumaça tóxica e vazamentos de óleo no campo.</p>
                 </div>
@@ -123,7 +280,10 @@
     <section id="automacao" class="secao destaque">
         <div class="container">
             <div class="secao-eyebrow">Inteligência Artificial</div>
-            <h2><i class="fa-solid fa-robot"></i> Automação de Alta Precisão</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-robot"/></svg>
+                Automação de Alta Precisão
+            </h2>
             <div class="conteudo-grid">
                 <div class="texto">
                     <p>Sensores inteligentes, radares e sistemas de GPS permitem operações agrícolas precisas com mínima perda de recursos.</p>
@@ -158,13 +318,8 @@
                                     <stop offset="100%" stop-color="#0a150c"/>
                                 </linearGradient>
                             </defs>
-
-                            <!-- Ground glow -->
                             <ellipse cx="210" cy="295" rx="155" ry="18" fill="url(#glow-green)" class="ground-glow"/>
-
-                            <!-- === GROUND TRACK === -->
                             <rect x="50" y="275" width="320" height="8" rx="4" fill="#0d2010" stroke="#4ade8030" stroke-width="1"/>
-                            <!-- Track dashes -->
                             <g fill="#4ade8040">
                                 <rect x="60" y="277" width="20" height="4" rx="2"/>
                                 <rect x="90" y="277" width="20" height="4" rx="2"/>
@@ -177,11 +332,8 @@
                                 <rect x="300" y="277" width="20" height="4" rx="2"/>
                                 <rect x="330" y="277" width="20" height="4" rx="2"/>
                             </g>
-
-                            <!-- === BIG REAR WHEEL === -->
                             <circle cx="135" cy="248" r="62" fill="url(#wheel-grad)" stroke="#4ade8050" stroke-width="2"/>
                             <circle cx="135" cy="248" r="50" fill="none" stroke="#4ade8025" stroke-width="1.5"/>
-                            <!-- Wheel spokes -->
                             <g stroke="#4ade8060" stroke-width="2.5" stroke-linecap="round" class="rear-wheel-spokes">
                                 <line x1="135" y1="200" x2="135" y2="230"/>
                                 <line x1="135" y1="266" x2="135" y2="296"/>
@@ -192,7 +344,6 @@
                                 <line x1="172" y1="211" x2="152" y2="231"/>
                                 <line x1="118" y1="265" x2="98"  y2="285"/>
                             </g>
-                            <!-- Wheel tread lugs -->
                             <g fill="#4ade8035" class="rear-wheel-lugs">
                                 <rect x="73"  y="244" width="12" height="8" rx="2" transform="rotate(-20 73 248)"/>
                                 <rect x="188" y="244" width="12" height="8" rx="2" transform="rotate(20 194 248)"/>
@@ -205,8 +356,6 @@
                             </g>
                             <circle cx="135" cy="248" r="12" fill="#0d2010" stroke="#4ade8070" stroke-width="2"/>
                             <circle cx="135" cy="248" r="5"  fill="#4ade80" filter="url(#glow)"/>
-
-                            <!-- === SMALL FRONT WHEEL === -->
                             <circle cx="295" cy="261" r="38" fill="url(#wheel-grad)" stroke="#4ade8050" stroke-width="2"/>
                             <circle cx="295" cy="261" r="28" fill="none" stroke="#4ade8025" stroke-width="1.5"/>
                             <g stroke="#4ade8060" stroke-width="2" stroke-linecap="round" class="front-wheel-spokes">
@@ -227,69 +376,42 @@
                             </g>
                             <circle cx="295" cy="261" r="9" fill="#0d2010" stroke="#4ade8070" stroke-width="2"/>
                             <circle cx="295" cy="261" r="4" fill="#4ade80" filter="url(#glow)"/>
-
-                            <!-- === TRACTOR BODY === -->
                             <path d="M155 260 L155 185 L320 185 L335 200 L335 260 Z" fill="url(#body-grad)" stroke="#4ade8040" stroke-width="1.5"/>
-                            <!-- Body panel lines -->
                             <line x1="155" y1="220" x2="335" y2="220" stroke="#4ade8020" stroke-width="1"/>
                             <line x1="240" y1="185" x2="240" y2="260" stroke="#4ade8018" stroke-width="1"/>
-                            <!-- Engine block detail -->
                             <rect x="270" y="200" width="55" height="50" rx="4" fill="#0a1a0d" stroke="#4ade8035" stroke-width="1"/>
-                            <!-- Electric motor symbol -->
                             <text x="297" y="232" font-family="monospace" font-size="18" fill="#4ade80" text-anchor="middle" filter="url(#glow)" opacity="0.9">⚡</text>
-
-                            <!-- Battery indicator -->
                             <rect x="160" y="228" width="72" height="18" rx="4" fill="#061008" stroke="#4ade8040" stroke-width="1.2"/>
                             <rect x="232" y="232" width="5" height="10" rx="2" fill="#4ade8040"/>
                             <rect x="162" y="230" width="58" height="14" rx="3" fill="#4ade80" class="battery-fill"/>
                             <text x="191" y="241" font-family="monospace" font-size="8" fill="#020b05" text-anchor="middle" font-weight="bold">100% ⚡</text>
-
-                            <!-- === CABIN === -->
                             <rect x="160" y="130" width="110" height="60" rx="6" fill="url(#cabin-grad)" stroke="#4ade8055" stroke-width="1.5"/>
-                            <!-- Cabin roof -->
                             <rect x="155" y="122" width="120" height="16" rx="5" fill="#0f2418" stroke="#4ade8060" stroke-width="1.5"/>
-                            <!-- Windows -->
                             <rect x="168" y="137" width="40" height="34" rx="4" fill="#0a2010" stroke="#4ade8060" stroke-width="1.2"/>
                             <rect x="216" y="137" width="44" height="34" rx="4" fill="#0a2010" stroke="#4ade8060" stroke-width="1.2"/>
-                            <!-- Window glow / reflection -->
                             <rect x="170" y="139" width="36" height="8" rx="2" fill="#4ade8015"/>
                             <rect x="218" y="139" width="40" height="8" rx="2" fill="#4ade8015"/>
-                            <!-- Sensor strip on cabin top -->
                             <rect x="158" y="120" width="114" height="6" rx="3" fill="#4ade80" opacity="0.7" filter="url(#glow)" class="sensor-strip"/>
-
-                            <!-- === ROBOT HEAD / SENSOR DOME === -->
                             <ellipse cx="215" cy="112" rx="28" ry="18" fill="#0d2010" stroke="#4ade8065" stroke-width="1.5"/>
-                            <!-- Camera eyes -->
                             <circle cx="205" cy="110" r="7" fill="#061008" stroke="#4ade8080" stroke-width="1.2"/>
                             <circle cx="225" cy="110" r="7" fill="#061008" stroke="#4ade8080" stroke-width="1.2"/>
-                            <!-- Pupils / scanning -->
                             <circle cx="205" cy="110" r="4" fill="#4ade80" filter="url(#glow-strong)" class="eye-l"/>
                             <circle cx="225" cy="110" r="4" fill="#4ade80" filter="url(#glow-strong)" class="eye-r"/>
-                            <!-- Antenna -->
                             <line x1="215" y1="94" x2="215" y2="72" stroke="#4ade8080" stroke-width="1.5"/>
                             <circle cx="215" cy="70" r="5" fill="#4ade80" filter="url(#glow-strong)" class="antenna-blink"/>
-                            <!-- Radar sweep arc -->
                             <path d="M215 70 L195 50 A28 28 0 0 1 235 50 Z" fill="#4ade8012" stroke="#4ade8030" stroke-width="0.8" class="radar-sweep"/>
-
-                            <!-- === ROBOTIC ARM (front) === -->
                             <g class="robot-arm">
                                 <line x1="335" y1="210" x2="370" y2="200" stroke="#4ade8060" stroke-width="3" stroke-linecap="round"/>
                                 <line x1="370" y1="200" x2="390" y2="225" stroke="#4ade8060" stroke-width="2.5" stroke-linecap="round"/>
-                                <!-- Claw / sensor tip -->
                                 <circle cx="392" cy="228" r="6" fill="#061008" stroke="#4ade80" stroke-width="1.5"/>
                                 <line x1="392" y1="222" x2="392" y2="214" stroke="#4ade80" stroke-width="1.5"/>
                                 <line x1="388" y1="234" x2="382" y2="240" stroke="#4ade80" stroke-width="1.5"/>
                                 <line x1="396" y1="234" x2="402" y2="240" stroke="#4ade80" stroke-width="1.5"/>
-                                <!-- sensor dot -->
                                 <circle cx="392" cy="228" r="2.5" fill="#4ade80" filter="url(#glow)" class="sensor-dot"/>
                             </g>
-
-                            <!-- === GPS / LIDAR DOME TOP === -->
                             <ellipse cx="260" cy="122" rx="14" ry="8" fill="#0a1a0d" stroke="#4ade8055" stroke-width="1.2"/>
                             <ellipse cx="260" cy="120" rx="10" ry="5" fill="#4ade8020"/>
                             <circle  cx="260" cy="120" r="3"  fill="#4ade80" class="lidar-blink" filter="url(#glow)"/>
-
-                            <!-- === DATA STREAM PARTICLES === -->
                             <g class="data-particles" fill="#4ade80" opacity="0.7">
                                 <circle cx="60"  cy="120" r="2" class="particle p1"/>
                                 <circle cx="80"  cy="145" r="1.5" class="particle p2"/>
@@ -299,15 +421,11 @@
                                 <circle cx="405" cy="130" r="1.5" class="particle p6"/>
                                 <circle cx="370" cy="170" r="1.5" class="particle p7"/>
                             </g>
-
-                            <!-- === SIGNAL RINGS (from antenna) === -->
                             <g class="signal-rings" fill="none" stroke="#4ade80" stroke-linecap="round">
                                 <circle cx="215" cy="70" r="14" stroke-width="0.8" class="ring r1"/>
                                 <circle cx="215" cy="70" r="22" stroke-width="0.6" class="ring r2"/>
                                 <circle cx="215" cy="70" r="30" stroke-width="0.4" class="ring r3"/>
                             </g>
-
-                            <!-- === EXHAUST / ENERGY LABEL === -->
                             <rect x="56" y="56" width="88" height="26" rx="8" fill="#061008" stroke="#4ade8050" stroke-width="1"/>
                             <text x="100" y="73" font-family="'Space Grotesk', sans-serif" font-size="10" fill="#4ade80" text-anchor="middle" font-weight="700">⚡ Zero Emissões</text>
                         </svg>
@@ -321,20 +439,29 @@
     <section id="energia" class="secao">
         <div class="container">
             <div class="secao-eyebrow">Energia Renovável</div>
-            <h2><i class="fa-solid fa-solar-panel"></i> Autossuficiência Energética</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-solar"/></svg>
+                Autossuficiência Energética
+            </h2>
             <div class="cards">
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-solar"/></svg>
+                    </div>
                     <h3>Energia Solar</h3>
                     <p>Fazendas transformadas em usinas solares para abastecer robôs e veículos elétricos.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-wind"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-wind"/></svg>
+                    </div>
                     <h3>Energia Eólica</h3>
                     <p>Turbinas eólicas complementam a geração energética sustentável no campo.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-battery-full"></i></div>
+                    <div class="card-icon">
+                        <svg class="card-svg"><use href="#ico-battery"/></svg>
+                    </div>
                     <h3>Bancos de Baterias</h3>
                     <p>Armazenamento inteligente garante funcionamento contínuo mesmo sem sol ou vento.</p>
                 </div>
@@ -346,7 +473,10 @@
     <section class="simulador">
         <div class="container">
             <div class="secao-eyebrow">Simulador</div>
-            <h2><i class="fa-solid fa-chart-bar"></i> Calcule sua Economia</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-bar"/></svg>
+                Calcule sua Economia
+            </h2>
             <p>Descubra quanto sua fazenda pode economizar ao migrar para máquinas elétricas.</p>
             <div class="calculadora">
                 <div class="input-wrap">
@@ -363,20 +493,29 @@
     <section class="secao impacto">
         <div class="container">
             <div class="secao-eyebrow" style="text-align:center">Meio Ambiente</div>
-            <h2><i class="fa-solid fa-seedling"></i> Impacto Ecológico Zero</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-seedling"/></svg>
+                Impacto Ecológico Zero
+            </h2>
             <p>Robôs leves preservam a estrutura do solo e reduzem a compactação causada por tratores pesados tradicionais.</p>
             <div class="grafico">
 
                 <!-- ABAS -->
                 <div class="grafico-tabs">
-                    <button class="grafico-tab ativo" onclick="trocarAba('emissoes', this)">🌿 Emissões de CO₂</button>
-                    <button class="grafico-tab" onclick="trocarAba('custos', this)">💰 Comparativo de Custos</button>
+                    <button class="grafico-tab ativo" onclick="trocarAba('emissoes', this)">
+                        <svg class="tab-icon"><use href="#ico-leaf"/></svg>
+                        Emissões de CO₂
+                    </button>
+                    <button class="grafico-tab" onclick="trocarAba('custos', this)">
+                        <svg class="tab-icon"><use href="#ico-coin"/></svg>
+                        Comparativo de Custos
+                    </button>
                 </div>
 
                 <!-- PAINEL: EMISSÕES -->
                 <div class="grafico-painel ativo" id="painel-emissoes">
                     <div class="barras">
-                            <div class="barra-grupo">
+                        <div class="barra-grupo">
                             <div class="barra-par">
                                 <div class="barra diesel" style="height:90%" data-tooltip="Tratores Diesel: ~45t CO₂/ano — equivale a 18.000 km rodados de carro"><span class="barra-valor">~45t</span></div>
                                 <div class="barra eletrico" style="height:5%" data-tooltip="Tratores Elétricos: ~2t CO₂/ano — redução de 96%"><span class="barra-valor">~2t</span></div>
@@ -478,21 +617,33 @@
     <section class="impact-counter-strip">
         <div class="impact-counter-inner">
             <div class="impact-stat">
+                <div class="impact-icon-wrap">
+                    <svg class="impact-svg"><use href="#ico-tractor"/></svg>
+                </div>
                 <div class="impact-val" data-target="1847" data-suffix="">0</div>
                 <div class="impact-label">Fazendas atendidas</div>
             </div>
             <div class="impact-divider"></div>
             <div class="impact-stat">
+                <div class="impact-icon-wrap">
+                    <svg class="impact-svg"><use href="#ico-coin"/></svg>
+                </div>
                 <div class="impact-val" data-target="284" data-prefix="R$" data-suffix="M">R$0M</div>
                 <div class="impact-label">Economizados em diesel</div>
             </div>
             <div class="impact-divider"></div>
             <div class="impact-stat">
+                <div class="impact-icon-wrap">
+                    <svg class="impact-svg"><use href="#ico-leaf"/></svg>
+                </div>
                 <div class="impact-val" data-target="12400" data-suffix="t">0t</div>
                 <div class="impact-label">Toneladas de CO₂ evitadas</div>
             </div>
             <div class="impact-divider"></div>
             <div class="impact-stat">
+                <div class="impact-icon-wrap">
+                    <svg class="impact-svg"><use href="#ico-check"/></svg>
+                </div>
                 <div class="impact-val" data-target="98" data-suffix="%">0%</div>
                 <div class="impact-label">Satisfação dos clientes</div>
             </div>
@@ -503,7 +654,10 @@
     <section id="contato" class="contato">
         <div class="container">
             <div class="secao-eyebrow">Fale conosco</div>
-            <h2><i class="fa-solid fa-paper-plane"></i> Conecte-se com o Agro do Futuro</h2>
+            <h2>
+                <svg class="h2-icon"><use href="#ico-send"/></svg>
+                Conecte-se com o Agro do Futuro
+            </h2>
             <form>
                 <input type="text" placeholder="Nome" required>
                 <input type="email" placeholder="E-mail" required>
@@ -518,12 +672,22 @@
     <footer class="rodape">
         <p>© 2026 Campo Autônomo • Agronegócio Inteligente e Sustentável</p>
         <div class="redes">
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" aria-label="YouTube">
+                <svg class="rede-svg"><use href="#ico-youtube"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+                <svg class="rede-svg"><use href="#ico-instagram"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+                <svg class="rede-svg"><use href="#ico-linkedin"/></svg>
+            </a>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // Replace emoji in simulator result with SVG icons
+    const origMostrar = window.mostrarResultado;
+    </script>
 </body>
 </html>

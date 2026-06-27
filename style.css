@@ -1181,3 +1181,245 @@ h1, h2, h3, h4, h5, h6,
 /* Colour-code tooltip border by type */
 .barra.diesel[data-tooltip]:hover::after  { border-color: rgba(248,113,113,0.6); }
 .barra.eletrico[data-tooltip]:hover::after { border-color: rgba(74,222,128,0.5); }
+/* ============================================================
+   SVG ICON SYSTEM — substitui FontAwesome e emojis
+   ============================================================ */
+
+/* Logo icon */
+.logo-icon {
+    width: 22px; height: 22px;
+    color: var(--verde);
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+    stroke-width: 2.2;
+    filter: drop-shadow(0 0 6px rgba(74,222,128,0.5));
+    animation: boltPulse 2s ease-in-out infinite;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+@keyframes boltPulse {
+    0%,100% { filter: drop-shadow(0 0 4px rgba(74,222,128,0.4)); }
+    50%      { filter: drop-shadow(0 0 10px rgba(74,222,128,0.85)); }
+}
+
+/* Float badges */
+.fbadge-icon {
+    width: 16px; height: 16px;
+    color: var(--verde);
+    flex-shrink: 0;
+    stroke-width: 2;
+}
+
+/* Hero badge */
+.badge-icon {
+    width: 14px; height: 14px;
+    color: var(--verde);
+    stroke-width: 2.5;
+    animation: checkSpin 0.6s ease-out 0.8s both;
+}
+@keyframes checkSpin {
+    from { opacity: 0; transform: scale(0.4) rotate(-30deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Button icon */
+.btn-icon {
+    width: 15px; height: 15px;
+    color: currentColor;
+    stroke-width: 2.5;
+    transition: transform 0.2s;
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn:hover .btn-icon {
+    transform: translateX(3px);
+}
+
+/* Section title icons */
+.h2-icon {
+    width: 1em; height: 1em;
+    color: var(--verde);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 8px rgba(74,222,128,0.5));
+    position: relative;
+    top: -0.05em;
+}
+
+/* Pill icons */
+.pill-svg {
+    width: 22px; height: 22px;
+    color: var(--verde);
+    stroke-width: 2;
+    display: block;
+}
+.pill-icon {
+    animation: pillIconHover 0s; /* overridden on hover below */
+}
+.pill:hover .pill-icon {
+    background: rgba(74,222,128,0.22);
+    border-color: rgba(74,222,128,0.4);
+}
+.pill:hover .pill-svg {
+    animation: iconBounce 0.4s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+@keyframes iconBounce {
+    0%,100% { transform: translateY(0); }
+    30%      { transform: translateY(-5px); }
+    60%      { transform: translateY(-2px); }
+}
+
+/* Card SVG icons */
+.card-svg {
+    width: 26px; height: 26px;
+    color: var(--verde);
+    stroke-width: 2;
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.card:hover .card-svg {
+    transform: scale(1.18) rotate(-6deg);
+}
+/* Keep card-icon sizing consistent */
+.card-icon {
+    transition: box-shadow 0.25s, background 0.25s;
+}
+.card:hover .card-icon {
+    background: rgba(74,222,128,0.18);
+    box-shadow: 0 0 18px rgba(74,222,128,0.2);
+}
+
+/* Grafico tab icons */
+.tab-icon {
+    width: 14px; height: 14px;
+    color: currentColor;
+    stroke-width: 2;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+}
+
+/* Impact counter icons */
+.impact-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--verde-glow);
+    border: 1px solid var(--borda);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 0.8rem;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+.impact-stat:hover .impact-icon-wrap {
+    background: rgba(74,222,128,0.2);
+    box-shadow: 0 0 20px rgba(74,222,128,0.25);
+}
+.impact-svg {
+    width: 20px; height: 20px;
+    color: var(--verde);
+    stroke-width: 2;
+    display: block;
+    animation: impactIconPulse 3s ease-in-out infinite;
+}
+.impact-stat:nth-child(3) .impact-svg { animation-delay: 0.5s; }
+.impact-stat:nth-child(5) .impact-svg { animation-delay: 1s; }
+.impact-stat:nth-child(7) .impact-svg { animation-delay: 1.5s; }
+@keyframes impactIconPulse {
+    0%,100% { opacity: 0.75; }
+    50%      { opacity: 1; filter: drop-shadow(0 0 5px rgba(74,222,128,0.6)); }
+}
+
+/* Social / rede icons */
+.rede-svg {
+    width: 16px; height: 16px;
+    color: currentColor;
+    stroke-width: 1.8;
+    display: block;
+    transition: transform 0.2s;
+}
+.redes a:hover .rede-svg {
+    transform: scale(1.2);
+}
+
+/* Simulador result icon replacements (applied via JS) */
+.result-icon {
+    display: inline-block;
+    width: 16px; height: 16px;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    stroke-width: 2;
+    position: relative;
+    top: -1px;
+}
+
+/* ============================================================
+   CARD REFINEMENTS — micro-glow on hover
+   ============================================================ */
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: radial-gradient(ellipse at 50% 0%, rgba(74,222,128,0.07) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.card {
+    position: relative;
+    overflow: hidden;
+}
+.card:hover::before {
+    opacity: 1;
+}
+
+/* ============================================================
+   STRIP PILL — animated left border on hover
+   ============================================================ */
+.pill {
+    border-left: 2px solid transparent;
+    padding-left: 0.8rem;
+    transition: border-color 0.25s;
+}
+.pill:hover {
+    border-left-color: var(--verde);
+}
+
+/* ============================================================
+   FLOAT BADGE — subtle entry animation
+   ============================================================ */
+.float-badge {
+    animation: floatIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.float-badge:nth-child(2) { animation-delay: 0.15s; }
+@keyframes floatIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================================
+   LEAF ICON — Continuous subtle spin on float badge
+   ============================================================ */
+.float-badge .fbadge-icon {
+    animation: leafWave 3s ease-in-out infinite;
+}
+@keyframes leafWave {
+    0%,100% { transform: rotate(0deg); }
+    30%      { transform: rotate(12deg); }
+    60%      { transform: rotate(-8deg); }
+}
+.float-badge:nth-child(1) .fbadge-icon { animation-name: leafWave; }
+.float-badge:nth-child(2) .fbadge-icon {
+    animation-name: boltJolt;
+    animation-duration: 2.4s;
+}
+@keyframes boltJolt {
+    0%,80%,100% { transform: translateY(0) scale(1); }
+    85%          { transform: translateY(-3px) scale(1.1); }
+    92%          { transform: translateY(1px) scale(0.95); }
+}

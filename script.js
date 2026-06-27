@@ -490,3 +490,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = vals[0].closest('.impact-counter-strip') || vals[0].parentElement;
     observer.observe(container);
 });
+/* ============================================================
+   10. SIMULADOR — substitui emojis por ícones SVG no resultado
+   ============================================================ */
+(function patchSimuladorIcons() {
+    const svgIcon = (id, color) =>
+        `<svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="${color || 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#${id}"/></svg>`;
+
+    const origCalc = window.calcularEconomia;
+    window.calcularEconomia = function() {
+        // call original
+        const campo     = document.getElementById('diesel');
+        const resultado = document.getElementById('resultado');
+        const gasto = parseFloat(campo.value);
+
+        if (!campo.value || isNaN(gasto) || gasto <= 0) {
+            mostrarResultado(resultado,
+                svgIcon('ico-warn','#fca5a5') + ' <strong>Por favor, informe um valor mensal válido em reais (ex: 8500).</strong>',
+                'erro'
+            );
+            campo.focus();
+            return;
+        }
+
+        const REDUCAO_PERCENTUAL = 0.65;
+        const PRECO_DIESEL_LITRO = 6.80;
+        const CO2_POR_LITRO      = 2.68;
+        const economiaMensal = gasto * REDUCAO_PERCENTUAL;
+        const economiaAnual  = economiaMensal * 12;
+        const litrosEvitados = economiaAnual / PRECO_DIESEL_LITRO;
+        const co2Evitado     = litrosEvitados * CO2_POR_LITRO;
+        const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        const html = `
+            ${svgIcon('ico-check','#4ade80')} <strong>Resultado da Simulação</strong><br><br>
+            ${svgIcon('ico-coin','#4ade80')} Economia mensal estimada: <strong>${fmt(economiaMensal)}</strong><br>
+            ${svgIcon('ico-calendar','#4ade80')} Economia anual estimada: <strong>${fmt(economiaAnual)}</strong><br>
+            ${svgIcon('ico-drop','#4ade80')} Litros de diesel evitados/ano: <strong>${Math.round(litrosEvitados).toLocaleString('pt-BR')} L</strong><br>
+            ${svgIcon('ico-leaf','#4ade80')} CO₂ não emitido/ano: <strong>${Math.round(co2Evitado).toLocaleString('pt-BR')} kg</strong><br><br>
+            <small style="opacity:.7">*Cálculo baseado em redução média de 65% no custo energético e preço de referência do diesel a R$ ${PRECO_DIESEL_LITRO.toFixed(2)}/L.</small>
+        `;
+        mostrarResultado(resultado, html, 'sucesso');
+    };
+})();
+
+/* ============================================================
+   11. PILL ICONS — stagger entrance animations
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.pill').forEach((pill, i) => {
+        pill.style.transitionDelay = `${i * 60}ms`;
+    });
+});
