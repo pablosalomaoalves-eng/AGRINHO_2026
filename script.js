@@ -441,3 +441,141 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.pill').forEach((p, i) => { p.style.transitionDelay = `${i * 60}ms`; });
 });
+/* ============================================================
+   17. PARTICLE NETWORK — background animado para seções escuras
+   ============================================================ */
+(function initParticleNetworks() {
+    const SECTIONS = ['#frota', '#energia', '.secao.impacto'];
+    const CONFIG = {
+        count: 38,
+        maxDist: 155,
+        speed: 0.32,
+        nodeColor: 'rgba(74,222,128,',
+        lineColor: 'rgba(74,222,128,',
+        accentColor: 'rgba(103,232,249,',
+        nodeSizeMin: 1.2,
+        nodeSizeMax: 3.0,
+    };
+
+    function createNetwork(section) {
+        const el = document.querySelector(section);
+        if (!el) return;
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'section-particle-canvas';
+        el.insertBefore(canvas, el.firstChild);
+
+        const ctx = canvas.getContext('2d');
+        let W, H, nodes, raf;
+
+        function resize() {
+            W = canvas.width  = el.offsetWidth;
+            H = canvas.height = el.offsetHeight;
+        }
+
+        function makeNode() {
+            const isAccent = Math.random() < 0.18;
+            return {
+                x: Math.random() * W,
+                y: Math.random() * H,
+                vx: (Math.random() - 0.5) * CONFIG.speed,
+                vy: (Math.random() - 0.5) * CONFIG.speed,
+                r: CONFIG.nodeSizeMin + Math.random() * (CONFIG.nodeSizeMax - CONFIG.nodeSizeMin),
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.008 + Math.random() * 0.012,
+                accent: isAccent,
+            };
+        }
+
+        function init() {
+            resize();
+            nodes = Array.from({ length: CONFIG.count }, makeNode);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+
+            // update
+            for (const n of nodes) {
+                n.x += n.vx;
+                n.y += n.vy;
+                n.pulse += n.pulseSpeed;
+                if (n.x < -10) n.x = W + 10;
+                if (n.x > W + 10) n.x = -10;
+                if (n.y < -10) n.y = H + 10;
+                if (n.y > H + 10) n.y = -10;
+            }
+
+            // draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const a = nodes[i], b = nodes[j];
+                    const dx = a.x - b.x, dy = a.y - b.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONFIG.maxDist) {
+                        const alpha = (1 - dist / CONFIG.maxDist) * 0.35;
+                        const useAccent = a.accent || b.accent;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.strokeStyle = useAccent
+                            ? CONFIG.accentColor + alpha + ')'
+                            : CONFIG.lineColor   + alpha + ')';
+                        ctx.lineWidth = useAccent ? 0.6 : 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // draw nodes
+            for (const n of nodes) {
+                const pulseAlpha = 0.55 + 0.45 * Math.sin(n.pulse);
+                const color = n.accent ? CONFIG.accentColor : CONFIG.nodeColor;
+
+                // glow halo
+                const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4.5);
+                grad.addColorStop(0, color + (pulseAlpha * 0.5) + ')');
+                grad.addColorStop(1, color + '0)');
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r * 4.5, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                // core dot
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = color + pulseAlpha + ')';
+                ctx.fill();
+            }
+
+            raf = requestAnimationFrame(draw);
+        }
+
+        function start() {
+            init();
+            draw();
+        }
+
+        // Only animate when section is visible (perf)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!raf) start();
+                } else {
+                    if (raf) { cancelAnimationFrame(raf); raf = null; }
+                }
+            });
+        }, { threshold: 0.05 });
+        observer.observe(el);
+
+        window.addEventListener('resize', () => {
+            resize();
+            // re-scatter nodes on resize
+            if (nodes) nodes.forEach(n => { n.x = Math.random() * W; n.y = Math.random() * H; });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        SECTIONS.forEach(createNetwork);
+    });
+})();

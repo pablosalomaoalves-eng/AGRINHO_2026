@@ -1082,7 +1082,7 @@ ul   { list-style: none; }
 .back-top svg { width: 18px; height: 18px; stroke-width: 2.5; }
 
 /* ============================================================
-   NEON BEAM BACKGROUNDS
+   PARTICLE NETWORK BACKGROUNDS — canvas inserido via JS
    ============================================================ */
 #frota,
 #energia,
@@ -1090,92 +1090,21 @@ ul   { list-style: none; }
     position: relative;
     overflow: hidden;
 }
-
-/* Feixe neon principal — diagonal verde atravessando a seção */
-#frota::before,
-#energia::before,
-.secao.impacto::before {
-    content: '';
+.section-particle-canvas {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 0;
-    background:
-        /* feixe diagonal principal verde */
-        linear-gradient(
-            125deg,
-            transparent 0%,
-            transparent 28%,
-            rgba(74, 222, 128, 0.03) 33%,
-            rgba(74, 222, 128, 0.13) 38%,
-            rgba(134, 239, 172, 0.22) 42%,
-            rgba(74, 222, 128, 0.13) 46%,
-            rgba(74, 222, 128, 0.03) 51%,
-            transparent 56%,
-            transparent 100%
-        ),
-        /* feixe diagonal secundário ciano */
-        linear-gradient(
-            55deg,
-            transparent 0%,
-            transparent 45%,
-            rgba(56, 189, 248, 0.02) 50%,
-            rgba(56, 189, 248, 0.09) 54%,
-            rgba(103, 232, 249, 0.15) 58%,
-            rgba(56, 189, 248, 0.09) 62%,
-            rgba(56, 189, 248, 0.02) 66%,
-            transparent 71%,
-            transparent 100%
-        ),
-        /* feixe horizontal difuso */
-        linear-gradient(
-            180deg,
-            transparent 0%,
-            transparent 38%,
-            rgba(74, 222, 128, 0.04) 44%,
-            rgba(74, 222, 128, 0.09) 50%,
-            rgba(74, 222, 128, 0.04) 56%,
-            transparent 62%,
-            transparent 100%
-        );
-    animation: neonBeamPulse 6s ease-in-out infinite;
+    opacity: 0.6;
 }
-
-/* Brilho de halo nos cantos — profundidade neon */
-#frota::after,
-#energia::after,
-.secao.impacto::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-        /* halo canto superior esquerdo — verde */
-        radial-gradient(ellipse 55% 40% at -5% 10%, rgba(74, 222, 128, 0.12) 0%, transparent 70%),
-        /* halo canto inferior direito — ciano */
-        radial-gradient(ellipse 55% 40% at 105% 90%, rgba(56, 189, 248, 0.10) 0%, transparent 70%),
-        /* pulso central suave */
-        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(74, 222, 128, 0.04) 0%, transparent 65%);
-    animation: neonHaloPulse 8s ease-in-out infinite;
+#frota > *:not(.section-particle-canvas),
+#energia > *:not(.section-particle-canvas),
+.secao.impacto > *:not(.section-particle-canvas) {
+    position: relative;
+    z-index: 1;
 }
-
-#frota > *, #energia > *, .secao.impacto > * { position: relative; z-index: 1; }
-
-@keyframes neonBeamPulse {
-    0%, 100% { opacity: 0.7; transform: scaleX(1); }
-    40%       { opacity: 1;   transform: scaleX(1.03); }
-    70%       { opacity: 0.85; }
-}
-@keyframes neonHaloPulse {
-    0%, 100% { opacity: 0.6; }
-    50%       { opacity: 1; }
-}
-
-#energia::before      { animation-delay: 2s; }
-#energia::after       { animation-delay: 2s; }
-.secao.impacto::before { animation-delay: 4s; }
-.secao.impacto::after  { animation-delay: 4s; }
 
 /* ============================================================
    TIPOGRAFIA
