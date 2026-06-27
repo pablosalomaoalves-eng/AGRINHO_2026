@@ -1,544 +1,443 @@
 /* ============================================================
    CAMPO AUTÔNOMO — Agro Elétrico Inteligente
-   script.js
+   script.js (v3 — features únicas + glassmorphism)
    ============================================================ */
 
 /* ============================================================
    1. SIMULADOR DE ECONOMIA DE DIESEL
    ============================================================ */
-
-/**
- * calcularEconomia()
- * Lê o campo #diesel, valida a entrada e exibe uma estimativa
- * de economia anual ao migrar para máquinas elétricas.
- *
- * Premissas do cálculo (ajustáveis):
- *   - Redução média de custo: 65 % (estudos de campo agro elétrico)
- *   - CO₂ evitado: ~2,68 kg por litro de diesel não queimado
- *   - Equivalência: R$ 1 de diesel ≈ 0,36 L (preço médio ~R$ 6,80/L → ajuste abaixo)
- */
 function calcularEconomia() {
-  const campo     = document.getElementById('diesel');
-  const resultado = document.getElementById('resultado');
+    const svgIcon = (id, color) =>
+        `<svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="${color||'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#${id}"/></svg>`;
 
-  // Leitura e sanitização
-  const gasto = parseFloat(campo.value);
+    const campo     = document.getElementById('diesel');
+    const resultado = document.getElementById('resultado');
+    const gasto     = parseFloat(campo.value);
 
-  // Validação
-  if (!campo.value || isNaN(gasto) || gasto <= 0) {
-    mostrarResultado(resultado,
-      '⚠️ Por favor, informe um valor mensal válido em reais (ex: 8500).',
-      'erro'
-    );
-    campo.focus();
-    return;
-  }
+    if (!campo.value || isNaN(gasto) || gasto <= 0) {
+        mostrarResultado(resultado,
+            svgIcon('ico-warn','#fca5a5') + ' <strong>Informe um valor mensal válido em reais (ex: 8500).</strong>',
+            'erro'
+        );
+        campo.focus();
+        return;
+    }
 
-  // --- Constantes do modelo ---
-  const REDUCAO_PERCENTUAL = 0.65;          // 65 % de economia
-  const PRECO_DIESEL_LITRO = 6.80;          // R$/L (referência jun/2026)
-  const CO2_POR_LITRO      = 2.68;          // kg CO₂ por litro de diesel
+    const REDUCAO           = 0.65;
+    const PRECO_DIESEL      = 6.80;
+    const CO2_POR_LITRO     = 2.68;
+    const economiaMensal    = gasto * REDUCAO;
+    const economiaAnual     = economiaMensal * 12;
+    const litrosEvitados    = economiaAnual / PRECO_DIESEL;
+    const co2Evitado        = litrosEvitados * CO2_POR_LITRO;
+    const retorno5Anos      = economiaAnual * 5;
+    const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-  // --- Cálculos mensais ---
-  const economiaMensal = gasto * REDUCAO_PERCENTUAL;
-  const gastoMensal    = gasto - economiaMensal;
-
-  // --- Cálculos anuais ---
-  const economiaAnual  = economiaMensal * 12;
-  const litrosEvitados = (economiaMensal * 12) / PRECO_DIESEL_LITRO;
-  const co2Evitado     = litrosEvitados * CO2_POR_LITRO;
-
-  // --- Formatação em BRL ---
-  const fmt = (v) =>
-    v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-  const html = `
-    ✅ <strong>Resultado da Simulação</strong><br><br>
-    💰 Economia mensal estimada: <strong>${fmt(economiaMensal)}</strong><br>
-    📅 Economia anual estimada: <strong>${fmt(economiaAnual)}</strong><br>
-    🛢️ Litros de diesel evitados/ano: <strong>${Math.round(litrosEvitados).toLocaleString('pt-BR')} L</strong><br>
-    🌿 CO₂ não emitido/ano: <strong>${Math.round(co2Evitado).toLocaleString('pt-BR')} kg</strong><br><br>
-    <small style="opacity:.75">
-      *Cálculo baseado em redução média de 65 % no custo energético
-      e preço de referência do diesel a R$ ${PRECO_DIESEL_LITRO.toFixed(2)}/L.
-      Valores podem variar conforme a operação.
-    </small>
-  `;
-
-  mostrarResultado(resultado, html, 'sucesso');
+    const html = `
+        ${svgIcon('ico-check','#4ade80')} <strong>Resultado da Simulação</strong><br><br>
+        ${svgIcon('ico-coin','#4ade80')} Economia mensal: <strong>${fmt(economiaMensal)}</strong><br>
+        ${svgIcon('ico-calendar','#4ade80')} Economia anual: <strong>${fmt(economiaAnual)}</strong><br>
+        ${svgIcon('ico-bar','#86efac')} Retorno em 5 anos: <strong>${fmt(retorno5Anos)}</strong><br>
+        ${svgIcon('ico-drop','#4ade80')} Litros evitados/ano: <strong>${Math.round(litrosEvitados).toLocaleString('pt-BR')} L</strong><br>
+        ${svgIcon('ico-leaf','#4ade80')} CO₂ não emitido/ano: <strong>${Math.round(co2Evitado).toLocaleString('pt-BR')} kg</strong><br><br>
+        <small style="opacity:.7">*Redução média de 65% no custo energético. Diesel a R$ ${PRECO_DIESEL.toFixed(2)}/L.</small>
+    `;
+    mostrarResultado(resultado, html, 'sucesso');
+    mostrarToast('Simulação calculada com sucesso! ⚡');
 }
 
-/**
- * mostrarResultado(el, html, tipo)
- * Exibe ou atualiza o bloco de resultado com animação suave.
- */
 function mostrarResultado(el, html, tipo) {
-  el.innerHTML = html;
-  el.style.display = 'block';
-
-  // Cor de borda conforme tipo
-  el.style.borderColor = tipo === 'erro'
-    ? 'rgba(248, 113, 113, 0.5)'   // vermelho suave
-    : 'rgba(74, 222, 128, 0.4)';   // verde elétrico
-
-  el.style.color = tipo === 'erro'
-    ? '#fca5a5'
-    : 'var(--verde-eletrico)';
-
-  // Animação de entrada
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(8px)';
-  requestAnimationFrame(() => {
-    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-    el.style.opacity = '1';
-    el.style.transform = 'translateY(0)';
-  });
+    el.innerHTML = html;
+    el.style.display = 'block';
+    el.style.borderColor = tipo === 'erro'
+        ? 'rgba(248, 113, 113, 0.5)'
+        : 'rgba(74, 222, 128, 0.4)';
+    el.style.color = tipo === 'erro' ? '#fca5a5' : 'var(--verde-eletrico)';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+    requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+        el.style.opacity    = '1';
+        el.style.transform  = 'translateY(0)';
+    });
 }
 
-// Permite calcular com a tecla Enter no campo de entrada
-document.addEventListener('DOMContentLoaded', () => {
-  const campoDiesel = document.getElementById('diesel');
-  if (campoDiesel) {
-    campoDiesel.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') calcularEconomia();
+/* ============================================================
+   2. TOAST NOTIFICATION
+   ============================================================ */
+function mostrarToast(msg) {
+    let toast = document.querySelector('.toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<svg style="width:16px;height:16px;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ico-check"/></svg>${msg}`;
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => toast.classList.remove('show'), 3500);
     });
-  }
-});
-
+}
 
 /* ============================================================
-   2. VALIDAÇÃO E FEEDBACK DO FORMULÁRIO DE CONTATO
+   3. CURSOR PERSONALIZADO
    ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('.contato form');
-  if (!form) return;
+    if (window.innerWidth < 900) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    const dot  = document.createElement('div');
+    const ring = document.createElement('div');
+    dot.className  = 'cursor-dot';
+    ring.className = 'cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
 
-    const nome    = form.querySelector('input[type="text"]');
-    const email   = form.querySelector('input[type="email"]');
-    const mensagem = form.querySelector('textarea');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
-    // Limpa erros anteriores
-    limparErros(form);
+    function animCursor() {
+        dot.style.transform  = `translate(${mx - 4}px, ${my - 4}px)`;
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
+        requestAnimationFrame(animCursor);
+    }
+    animCursor();
 
-    let valido = true;
+    document.querySelectorAll('a, button, .card, .barra, .grafico-tab').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+});
 
-    if (!nome.value.trim() || nome.value.trim().length < 2) {
-      marcarErro(nome, 'Informe seu nome (mínimo 2 caracteres).');
-      valido = false;
+/* ============================================================
+   4. PARTÍCULAS FLUTUANTES
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particles-canvas';
+    document.body.prepend(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x  = Math.random() * W;
+            this.y  = Math.random() * H;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = -Math.random() * 0.5 - 0.1;
+            this.r  = Math.random() * 1.5 + 0.5;
+            this.a  = Math.random() * 0.6 + 0.1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.y < -10 || this.x < -10 || this.x > W + 10) this.reset();
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(74,222,128,${this.a})`;
+            ctx.fill();
+        }
     }
 
-    if (!validarEmail(email.value)) {
-      marcarErro(email, 'Informe um e-mail válido.');
-      valido = false;
+    for (let i = 0; i < 55; i++) particles.push(new Particle());
+
+    function tick() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(tick);
     }
-
-    if (!valido) return;
-
-    // Feedback de envio (simulado — integre com backend ou serviço de e-mail)
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.textContent = 'Enviando…';
-
-    setTimeout(() => {
-      exibirMensagemSucesso(form);
-      form.reset();
-      btn.disabled = false;
-      btn.textContent = 'Enviar Proposta';
-    }, 1400);
-  });
+    tick();
 });
 
-function validarEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
-
-function marcarErro(campo, mensagem) {
-  campo.style.borderColor = 'rgba(248, 113, 113, 0.7)';
-  campo.style.boxShadow   = '0 0 0 3px rgba(248, 113, 113, 0.15)';
-
-  const span = document.createElement('span');
-  span.className = 'erro-campo';
-  span.textContent = mensagem;
-  span.style.cssText = `
-    display: block;
-    color: #fca5a5;
-    font-size: 0.82rem;
-    margin-top: -0.5rem;
-    padding-left: 0.25rem;
-  `;
-  campo.insertAdjacentElement('afterend', span);
-}
-
-function limparErros(form) {
-  form.querySelectorAll('.erro-campo').forEach(el => el.remove());
-  form.querySelectorAll('input, textarea').forEach(el => {
-    el.style.borderColor = '';
-    el.style.boxShadow   = '';
-  });
-}
-
-function exibirMensagemSucesso(form) {
-  // Remove aviso anterior se existir
-  const avisoAnterior = form.querySelector('.aviso-sucesso');
-  if (avisoAnterior) avisoAnterior.remove();
-
-  const aviso = document.createElement('div');
-  aviso.className = 'aviso-sucesso';
-  aviso.innerHTML = '✅ Proposta enviada! Entraremos em contato em breve.';
-  aviso.style.cssText = `
-    background: rgba(15, 36, 25, 0.9);
-    border: 1px solid rgba(74, 222, 128, 0.4);
-    border-radius: 0.75rem;
-    padding: 1rem 1.4rem;
-    color: var(--verde-eletrico, #4ade80);
-    font-weight: 700;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  `;
-  form.appendChild(aviso);
-
-  requestAnimationFrame(() => {
-    aviso.style.opacity   = '1';
-    aviso.style.transform = 'translateY(0)';
-  });
-
-  // Remove automaticamente após 6 segundos
-  setTimeout(() => {
-    aviso.style.opacity = '0';
-    setTimeout(() => aviso.remove(), 400);
-  }, 6000);
-}
-
-
 /* ============================================================
-   3. NAVEGAÇÃO ATIVA — DESTAQUE DO LINK ATUAL
+   5. SCROLL PROGRESS BAR
    ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-  const links    = document.querySelectorAll('.menu ul li a[href^="#"]');
-  const secoes   = Array.from(links)
-    .map(l => document.querySelector(l.getAttribute('href')))
-    .filter(Boolean);
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.prepend(bar);
 
-  if (!links.length || !secoes.length) return;
-
-  function atualizarLinkAtivo() {
-    const scrollY = window.scrollY + 120; // offset do header fixo
-
-    let secaoAtual = secoes[0];
-    secoes.forEach(secao => {
-      if (secao.offsetTop <= scrollY) secaoAtual = secao;
-    });
-
-    links.forEach(link => {
-      const ativo = link.getAttribute('href') === `#${secaoAtual.id}`;
-      link.style.color = ativo ? 'var(--verde-eletrico, #4ade80)' : '';
-    });
-  }
-
-  window.addEventListener('scroll', atualizarLinkAtivo, { passive: true });
-  atualizarLinkAtivo(); // roda na carga
+    window.addEventListener('scroll', () => {
+        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        bar.style.width = pct + '%';
+    }, { passive: true });
 });
 
+/* ============================================================
+   6. BACK TO TOP BUTTON
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.createElement('button');
+    btn.className = 'back-top';
+    btn.setAttribute('aria-label', 'Voltar ao topo');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`;
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 500);
+    }, { passive: true });
+
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+});
 
 /* ============================================================
-   4. ANIMAÇÕES DE SCROLL — SITE INTEIRO
+   7. HEADER — glassmorphism ao rolar
    ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const topo = document.querySelector('.topo');
+    if (!topo) return;
+    window.addEventListener('scroll', () => {
+        topo.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+});
 
-  // Cada seletor tem uma animação de entrada diferente
-  const grupos = [
-    // sobe de baixo — padrão
-    {
-      seletores: [
-        '.secao h2', '.secao-eyebrow', '.simulador h2',
-        '.simulador > .container > p', '.calculadora',
-        '.secao.impacto p', '.grafico', '.contato h2',
-        '.introducao h2', '.introducao p',
-        '.strip .pill', '.pill-text',
-        'section img',
-      ],
-      from: 'translateY(36px)',
-    },
-    // vem da esquerda
-    {
-      seletores: ['.conteudo-grid .texto', '.banner-overlay h2', '.banner-overlay p'],
-      from: 'translateX(-36px)',
-    },
-    // vem da direita
-    {
-      seletores: ['.conteudo-grid .imagem'],
-      from: 'translateX(36px)',
-    },
-    // escala + fade (cards, pills icon, form)
-    {
-      seletores: ['.card', '.pill-icon', '.contato form input', '.contato form textarea', '.contato form button'],
-      from: 'translateY(24px) scale(0.96)',
-    },
-  ];
+/* ============================================================
+   8. NAVEGAÇÃO ATIVA
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const links  = document.querySelectorAll('.menu ul li a[href^="#"]');
+    const secoes = Array.from(links).map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    if (!links.length || !secoes.length) return;
 
-  const DURACAO  = '0.6s';
-  const EASING   = 'cubic-bezier(0.22, 1, 0.36, 1)';
+    function atualizarAtivo() {
+        const scrollY = window.scrollY + 130;
+        let atual = secoes[0];
+        secoes.forEach(s => { if (s.offsetTop <= scrollY) atual = s; });
+        links.forEach(l => {
+            const ativo = l.getAttribute('href') === `#${atual.id}`;
+            l.style.color = ativo ? 'var(--verde-eletrico, #4ade80)' : '';
+        });
+    }
+    window.addEventListener('scroll', atualizarAtivo, { passive: true });
+    atualizarAtivo();
+});
 
-  // Aplica estado inicial em todos os elementos
-  grupos.forEach(({ seletores, from }) => {
-    seletores.forEach(sel => {
-      document.querySelectorAll(sel).forEach(el => {
-        // Não animar elementos dentro do banner (já visíveis no carregamento)
-        if (el.closest('.banner')) return;
-        el.style.opacity   = '0';
-        el.style.transform = from;
-        el.style.transition = `opacity ${DURACAO} ${EASING}, transform ${DURACAO} ${EASING}`;
-        el.dataset.animFrom = from;
-      });
+/* ============================================================
+   9. ROLAGEM SUAVE
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const alvo = document.querySelector(a.getAttribute('href'));
+            if (!alvo) return;
+            e.preventDefault();
+            const offset = document.querySelector('.topo')?.offsetHeight || 80;
+            window.scrollTo({ top: alvo.offsetTop - offset, behavior: 'smooth' });
+        });
     });
-  });
+});
 
-  // Observer que aciona a animação ao entrar na viewport
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada) => {
-      if (!entrada.isIntersecting) return;
+/* ============================================================
+   10. ANIMAÇÕES DE SCROLL
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      const el    = entrada.target;
-      // Atraso escalonado para irmãos (cards em sequência)
-      const irmaos = el.parentElement
-        ? Array.from(el.parentElement.children).filter(c => c.dataset.animFrom)
-        : [];
-      const idx   = irmaos.indexOf(el);
-      const delay = idx >= 0 ? idx * 80 : 0;
+    const grupos = [
+        { seletores: ['.secao h2','.secao-eyebrow','.simulador h2','.simulador > .container > p','.calculadora','.secao.impacto p','.grafico','.contato h2','.strip .pill'], from: 'translateY(40px)' },
+        { seletores: ['.conteudo-grid .texto','.banner-overlay h2','.banner-overlay p'], from: 'translateX(-40px)' },
+        { seletores: ['.conteudo-grid .imagem'], from: 'translateX(40px)' },
+        { seletores: ['.card','.pill-icon','.contato form input','.contato form textarea','.contato form button'], from: 'translateY(28px) scale(0.95)' },
+    ];
 
-      setTimeout(() => {
-        el.style.opacity   = '1';
-        el.style.transform = 'translateY(0) translateX(0) scale(1)';
-      }, delay);
+    const DURACAO = '0.65s';
+    const EASING  = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
-      observer.unobserve(el);
+    grupos.forEach(({ seletores, from }) => {
+        seletores.forEach(sel => {
+            document.querySelectorAll(sel).forEach(el => {
+                if (el.closest('.banner')) return;
+                el.style.opacity    = '0';
+                el.style.transform  = from;
+                el.style.transition = `opacity ${DURACAO} ${EASING}, transform ${DURACAO} ${EASING}`;
+                el.dataset.animFrom = from;
+            });
+        });
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  // Observa todos os elementos marcados
-  document.querySelectorAll('[data-anim-from]').forEach(el => observer.observe(el));
+    const observer = new IntersectionObserver(entradas => {
+        entradas.forEach(entrada => {
+            if (!entrada.isIntersecting) return;
+            const el      = entrada.target;
+            const irmaos  = el.parentElement ? Array.from(el.parentElement.children).filter(c => c.dataset.animFrom) : [];
+            const idx     = irmaos.indexOf(el);
+            const delay   = idx >= 0 ? idx * 85 : 0;
+            setTimeout(() => {
+                el.style.opacity   = '1';
+                el.style.transform = 'translateY(0) translateX(0) scale(1)';
+            }, delay);
+            observer.unobserve(el);
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  // Também observa elementos adicionados dinamicamente (ex: resultado do simulador)
-  const mutObs = new MutationObserver(() => {
     document.querySelectorAll('[data-anim-from]').forEach(el => observer.observe(el));
-  });
-  mutObs.observe(document.body, { childList: true, subtree: true });
-});
-
-
-/* ============================================================
-   5. EFEITO GLOW NO TOPO AO ROLAR
-   ============================================================ */
-
-document.addEventListener('DOMContentLoaded', () => {
-  const topo = document.querySelector('.topo');
-  if (!topo) return;
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      topo.style.boxShadow = '0 2px 24px rgba(74, 222, 128, 0.12)';
-    } else {
-      topo.style.boxShadow = 'none';
-    }
-  }, { passive: true });
-});
-
-
-/* ============================================================
-   6. ROLAGEM SUAVE PARA ÂNCORAS (fallback para navegadores antigos)
-   ============================================================ */
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('a[href^="#"]').forEach(ancora => {
-    ancora.addEventListener('click', (e) => {
-      const alvoId = ancora.getAttribute('href');
-      const alvo   = document.querySelector(alvoId);
-      if (!alvo) return;
-
-      e.preventDefault();
-      const offset = document.querySelector('.topo')?.offsetHeight || 80;
-
-      window.scrollTo({
-        top: alvo.offsetTop - offset,
-        behavior: 'smooth',
-      });
-    });
-  });
 });
 
 /* ============================================================
-   7. GRÁFICO COMPARATIVO — TROCA DE ABAS
+   11. CONTADORES ANIMADOS — HERO STATS
    ============================================================ */
-
-function trocarAba(id, btn) {
-    // Painéis
-    document.querySelectorAll('.grafico-painel').forEach(p => p.classList.remove('ativo'));
-    document.getElementById('painel-' + id).classList.add('ativo');
-
-    // Botões
-    document.querySelectorAll('.grafico-tab').forEach(b => b.classList.remove('ativo'));
-    btn.classList.add('ativo');
-}
-/* ============================================================
-   8. CONTADOR ANIMADO — HERO STATS
-   ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-  const stats = document.querySelectorAll('.stat-val[data-count]');
-  if (!stats.length) return;
+    const stats = document.querySelectorAll('.stat-val[data-count]');
+    if (!stats.length) return;
 
-  // "Zero" é especial — não conta, só aparece com fade
-  function animarContador(el) {
-    const alvo    = parseInt(el.dataset.count, 10);
-    const sufixo  = el.dataset.suffix  || '';
-    const prefixo = el.dataset.prefix  || '';
-
-    // Stat "Zero emissões" — sem contagem numérica
-    if (prefixo === 'Zero') {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(10px)';
-      requestAnimationFrame(() => {
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      });
-      return;
+    function animarContador(el) {
+        const alvo   = parseInt(el.dataset.count, 10);
+        const sufixo = el.dataset.suffix  || '';
+        const prefixo= el.dataset.prefix  || '';
+        if (prefixo === 'Zero') {
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+            return;
+        }
+        const DURACAO = 1800;
+        const EASING  = t => 1 - Math.pow(1 - t, 3);
+        const inicio  = performance.now();
+        const tick = agora => {
+            const p   = Math.min((agora - inicio) / DURACAO, 1);
+            el.textContent = Math.round(EASING(p) * alvo) + sufixo;
+            if (p < 1) requestAnimationFrame(tick);
+        };
+        el.textContent = '0' + sufixo;
+        requestAnimationFrame(tick);
     }
 
-    const DURACAO = 1800;   // ms
-    const EASING  = (t) => 1 - Math.pow(1 - t, 3); // ease-out cubic
-    const inicio  = performance.now();
+    const obs = new IntersectionObserver(entradas => {
+        entradas.forEach(e => {
+            if (!e.isIntersecting) return;
+            Array.from(stats).forEach((el, i) => setTimeout(() => animarContador(el), i * 250));
+            obs.disconnect();
+        });
+    }, { threshold: 0.5 });
 
-    function tick(agora) {
-      const progresso = Math.min((agora - inicio) / DURACAO, 1);
-      const valor     = Math.round(EASING(progresso) * alvo);
-      el.textContent  = valor + sufixo;
-      if (progresso < 1) requestAnimationFrame(tick);
-    }
-
-    el.textContent = '0' + sufixo;
-    requestAnimationFrame(tick);
-  }
-
-  // Dispara quando o hero entra na tela (na prática já está visível)
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach(entrada => {
-      if (!entrada.isIntersecting) return;
-      // Atraso escalonado para cada stat
-      const todos = Array.from(stats);
-      todos.forEach((el, i) => {
-        setTimeout(() => animarContador(el), i * 250);
-      });
-      observer.disconnect();
-    });
-  }, { threshold: 0.5 });
-
-  // Observa o container pai dos stats
-  const container = stats[0].closest('.hero-stats') || stats[0].parentElement;
-  observer.observe(container);
+    const container = stats[0].closest('.hero-stats') || stats[0].parentElement;
+    obs.observe(container);
 });
 
 /* ============================================================
-   9. IMPACT COUNTER STRIP — Animated counters
+   12. CONTADORES ANIMADOS — IMPACT STRIP
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
     const vals = document.querySelectorAll('.impact-val[data-target]');
     if (!vals.length) return;
 
     const DURACAO = 2200;
-    const EASING  = (t) => 1 - Math.pow(1 - t, 3);
+    const EASING  = t => 1 - Math.pow(1 - t, 3);
 
     function animarImpacto(el) {
         const alvo   = parseInt(el.dataset.target, 10);
         const sufixo = el.dataset.suffix  || '';
         const prefixo= el.dataset.prefix  || '';
         const inicio = performance.now();
-
-        function fmt(n) {
-            if (alvo >= 1000) return n.toLocaleString('pt-BR');
-            return n;
-        }
-
-        function tick(agora) {
-            const progresso = Math.min((agora - inicio) / DURACAO, 1);
-            const valor     = Math.round(EASING(progresso) * alvo);
-            el.textContent  = prefixo + fmt(valor) + sufixo;
-            if (progresso < 1) requestAnimationFrame(tick);
-        }
+        const fmt    = n => alvo >= 1000 ? n.toLocaleString('pt-BR') : n;
+        const tick   = agora => {
+            const p = Math.min((agora - inicio) / DURACAO, 1);
+            el.textContent = prefixo + fmt(Math.round(EASING(p) * alvo)) + sufixo;
+            if (p < 1) requestAnimationFrame(tick);
+        };
         el.textContent = prefixo + '0' + sufixo;
         requestAnimationFrame(tick);
     }
 
-    const observer = new IntersectionObserver((entradas) => {
-        entradas.forEach(entrada => {
-            if (!entrada.isIntersecting) return;
-            const todos = Array.from(vals);
-            todos.forEach((el, i) => setTimeout(() => animarImpacto(el), i * 180));
-            observer.disconnect();
+    const obs = new IntersectionObserver(entradas => {
+        entradas.forEach(e => {
+            if (!e.isIntersecting) return;
+            Array.from(vals).forEach((el, i) => setTimeout(() => animarImpacto(el), i * 180));
+            obs.disconnect();
         });
     }, { threshold: 0.4 });
 
-    const container = vals[0].closest('.impact-counter-strip') || vals[0].parentElement;
-    observer.observe(container);
+    obs.observe(vals[0].closest('.impact-counter-strip') || vals[0].parentElement);
 });
+
 /* ============================================================
-   10. SIMULADOR — substitui emojis por ícones SVG no resultado
+   13. GRÁFICO COMPARATIVO — TROCA DE ABAS
    ============================================================ */
-(function patchSimuladorIcons() {
-    const svgIcon = (id, color) =>
-        `<svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="${color || 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#${id}"/></svg>`;
-
-    const origCalc = window.calcularEconomia;
-    window.calcularEconomia = function() {
-        // call original
-        const campo     = document.getElementById('diesel');
-        const resultado = document.getElementById('resultado');
-        const gasto = parseFloat(campo.value);
-
-        if (!campo.value || isNaN(gasto) || gasto <= 0) {
-            mostrarResultado(resultado,
-                svgIcon('ico-warn','#fca5a5') + ' <strong>Por favor, informe um valor mensal válido em reais (ex: 8500).</strong>',
-                'erro'
-            );
-            campo.focus();
-            return;
-        }
-
-        const REDUCAO_PERCENTUAL = 0.65;
-        const PRECO_DIESEL_LITRO = 6.80;
-        const CO2_POR_LITRO      = 2.68;
-        const economiaMensal = gasto * REDUCAO_PERCENTUAL;
-        const economiaAnual  = economiaMensal * 12;
-        const litrosEvitados = economiaAnual / PRECO_DIESEL_LITRO;
-        const co2Evitado     = litrosEvitados * CO2_POR_LITRO;
-        const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-        const html = `
-            ${svgIcon('ico-check','#4ade80')} <strong>Resultado da Simulação</strong><br><br>
-            ${svgIcon('ico-coin','#4ade80')} Economia mensal estimada: <strong>${fmt(economiaMensal)}</strong><br>
-            ${svgIcon('ico-calendar','#4ade80')} Economia anual estimada: <strong>${fmt(economiaAnual)}</strong><br>
-            ${svgIcon('ico-drop','#4ade80')} Litros de diesel evitados/ano: <strong>${Math.round(litrosEvitados).toLocaleString('pt-BR')} L</strong><br>
-            ${svgIcon('ico-leaf','#4ade80')} CO₂ não emitido/ano: <strong>${Math.round(co2Evitado).toLocaleString('pt-BR')} kg</strong><br><br>
-            <small style="opacity:.7">*Cálculo baseado em redução média de 65% no custo energético e preço de referência do diesel a R$ ${PRECO_DIESEL_LITRO.toFixed(2)}/L.</small>
-        `;
-        mostrarResultado(resultado, html, 'sucesso');
-    };
-})();
+function trocarAba(id, btn) {
+    document.querySelectorAll('.grafico-painel').forEach(p => p.classList.remove('ativo'));
+    document.getElementById('painel-' + id).classList.add('ativo');
+    document.querySelectorAll('.grafico-tab').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+}
 
 /* ============================================================
-   11. PILL ICONS — stagger entrance animations
+   14. FORMULÁRIO DE CONTATO
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.pill').forEach((pill, i) => {
-        pill.style.transitionDelay = `${i * 60}ms`;
+    const form = document.querySelector('.contato form');
+    if (!form) return;
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const nome     = form.querySelector('input[type="text"]');
+        const email    = form.querySelector('input[type="email"]');
+        limparErros(form);
+        let valido = true;
+        if (!nome.value.trim() || nome.value.trim().length < 2) { marcarErro(nome, 'Informe seu nome (mínimo 2 caracteres).'); valido = false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { marcarErro(email, 'Informe um e-mail válido.'); valido = false; }
+        if (!valido) return;
+
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled     = true;
+        btn.textContent  = 'Enviando…';
+        setTimeout(() => {
+            exibirMensagemSucesso(form);
+            form.reset();
+            btn.disabled    = false;
+            btn.textContent = 'Enviar Proposta';
+            mostrarToast('Proposta enviada com sucesso! 🌿');
+        }, 1400);
     });
+});
+
+function marcarErro(campo, msg) {
+    campo.style.borderColor = 'rgba(248, 113, 113, 0.7)';
+    campo.style.boxShadow   = '0 0 0 3px rgba(248, 113, 113, 0.15)';
+    const span = document.createElement('span');
+    span.className   = 'erro-campo';
+    span.textContent = msg;
+    span.style.cssText = 'display:block;color:#fca5a5;font-size:0.82rem;margin-top:-0.5rem;padding-left:0.25rem;';
+    campo.insertAdjacentElement('afterend', span);
+}
+function limparErros(form) {
+    form.querySelectorAll('.erro-campo').forEach(el => el.remove());
+    form.querySelectorAll('input, textarea').forEach(el => { el.style.borderColor = ''; el.style.boxShadow = ''; });
+}
+function exibirMensagemSucesso(form) {
+    const anterior = form.querySelector('.aviso-sucesso');
+    if (anterior) anterior.remove();
+    const aviso = document.createElement('div');
+    aviso.className = 'aviso-sucesso';
+    aviso.innerHTML = '✅ Proposta enviada! Entraremos em contato em breve.';
+    aviso.style.cssText = 'background:rgba(10,35,20,0.85);backdrop-filter:blur(12px);border:1px solid rgba(74,222,128,0.4);border-radius:12px;padding:1rem 1.4rem;color:#4ade80;font-weight:700;text-align:center;opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease;grid-column:1/-1;';
+    form.appendChild(aviso);
+    requestAnimationFrame(() => { aviso.style.opacity = '1'; aviso.style.transform = 'translateY(0)'; });
+    setTimeout(() => { aviso.style.opacity = '0'; setTimeout(() => aviso.remove(), 400); }, 6000);
+}
+
+/* ============================================================
+   15. ENTER NO SIMULADOR
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const c = document.getElementById('diesel');
+    if (c) c.addEventListener('keydown', e => { if (e.key === 'Enter') calcularEconomia(); });
+});
+
+/* ============================================================
+   16. STAGGER PILLS
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.pill').forEach((p, i) => { p.style.transitionDelay = `${i * 60}ms`; });
 });
