@@ -22,8 +22,8 @@
     --cinza-escuro: #020b05;
     --branco:       #f8fafc;
     --cinza-texto:  #94a3b8;
-    --fonte-display: 'Segoe UI', 'Arial Black', sans-serif;
-    --fonte-corpo:   'Segoe UI', system-ui, sans-serif;
+    --fonte-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --fonte-corpo:   'Inter', system-ui, sans-serif;
     --raio:         0.75rem;
     --raio-card:    1rem;
     --espaco-secao: 6rem 0;
@@ -724,6 +724,7 @@ ul   { list-style: none; }
     gap: 1rem;
     max-width: 700px;
     margin: 0 auto;
+}
 .contato form textarea,
 .contato form button { grid-column: 1 / -1; }
 
@@ -881,4 +882,25 @@ ul   { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
     #frota::before, #energia::before, .secao.impacto::before,
     #frota::after,  #energia::after,  .secao.impacto::after { animation: none; }
+}
+
+/* ============================================================
+   TIPOGRAFIA — Space Grotesk + Inter
+   ============================================================ */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+.logo h1,
+.stat-val,
+.btn,
+.btn-outline,
+.badge,
+.secao-eyebrow,
+.grafico-tab,
+.pill-text strong,
+.float-badge,
+.barra-valor {
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
 }
