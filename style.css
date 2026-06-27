@@ -703,6 +703,11 @@ ul   { list-style: none; }
     padding: var(--espaco-secao);
     background: rgba(6, 22, 12, 0.55);
     border-top: 1px solid var(--borda);
+}
+.contato .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 .contato h2 {
