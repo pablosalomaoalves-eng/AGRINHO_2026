@@ -904,3 +904,14 @@ h1, h2, h3, h4, h5, h6,
 .barra-valor {
     font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
 }
+/* ============================================================
+   ÍCONES NOS TÍTULOS
+   ============================================================ */
+.secao h2 i,
+.simulador h2 i,
+.contato h2 i {
+    color: var(--verde);
+    margin-right: 0.4rem;
+    font-size: 0.9em;
+    filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.5));
+}

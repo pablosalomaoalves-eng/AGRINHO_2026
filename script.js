@@ -388,3 +388,61 @@ function trocarAba(id, btn) {
     document.querySelectorAll('.grafico-tab').forEach(b => b.classList.remove('ativo'));
     btn.classList.add('ativo');
 }
+/* ============================================================
+   8. CONTADOR ANIMADO — HERO STATS
+   ============================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const stats = document.querySelectorAll('.stat-val[data-count]');
+  if (!stats.length) return;
+
+  // "Zero" é especial — não conta, só aparece com fade
+  function animarContador(el) {
+    const alvo    = parseInt(el.dataset.count, 10);
+    const sufixo  = el.dataset.suffix  || '';
+    const prefixo = el.dataset.prefix  || '';
+
+    // Stat "Zero emissões" — sem contagem numérica
+    if (prefixo === 'Zero') {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+      return;
+    }
+
+    const DURACAO = 1800;   // ms
+    const EASING  = (t) => 1 - Math.pow(1 - t, 3); // ease-out cubic
+    const inicio  = performance.now();
+
+    function tick(agora) {
+      const progresso = Math.min((agora - inicio) / DURACAO, 1);
+      const valor     = Math.round(EASING(progresso) * alvo);
+      el.textContent  = valor + sufixo;
+      if (progresso < 1) requestAnimationFrame(tick);
+    }
+
+    el.textContent = '0' + sufixo;
+    requestAnimationFrame(tick);
+  }
+
+  // Dispara quando o hero entra na tela (na prática já está visível)
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach(entrada => {
+      if (!entrada.isIntersecting) return;
+      // Atraso escalonado para cada stat
+      const todos = Array.from(stats);
+      todos.forEach((el, i) => {
+        setTimeout(() => animarContador(el), i * 250);
+      });
+      observer.disconnect();
+    });
+  }, { threshold: 0.5 });
+
+  // Observa o container pai dos stats
+  const container = stats[0].closest('.hero-stats') || stats[0].parentElement;
+  observer.observe(container);
+});
