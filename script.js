@@ -446,3 +446,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = stats[0].closest('.hero-stats') || stats[0].parentElement;
   observer.observe(container);
 });
+
+/* ============================================================
+   9. IMPACT COUNTER STRIP — Animated counters
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const vals = document.querySelectorAll('.impact-val[data-target]');
+    if (!vals.length) return;
+
+    const DURACAO = 2200;
+    const EASING  = (t) => 1 - Math.pow(1 - t, 3);
+
+    function animarImpacto(el) {
+        const alvo   = parseInt(el.dataset.target, 10);
+        const sufixo = el.dataset.suffix  || '';
+        const prefixo= el.dataset.prefix  || '';
+        const inicio = performance.now();
+
+        function fmt(n) {
+            if (alvo >= 1000) return n.toLocaleString('pt-BR');
+            return n;
+        }
+
+        function tick(agora) {
+            const progresso = Math.min((agora - inicio) / DURACAO, 1);
+            const valor     = Math.round(EASING(progresso) * alvo);
+            el.textContent  = prefixo + fmt(valor) + sufixo;
+            if (progresso < 1) requestAnimationFrame(tick);
+        }
+        el.textContent = prefixo + '0' + sufixo;
+        requestAnimationFrame(tick);
+    }
+
+    const observer = new IntersectionObserver((entradas) => {
+        entradas.forEach(entrada => {
+            if (!entrada.isIntersecting) return;
+            const todos = Array.from(vals);
+            todos.forEach((el, i) => setTimeout(() => animarImpacto(el), i * 180));
+            observer.disconnect();
+        });
+    }, { threshold: 0.4 });
+
+    const container = vals[0].closest('.impact-counter-strip') || vals[0].parentElement;
+    observer.observe(container);
+});

@@ -130,9 +130,187 @@
                     <p>Robôs agrícolas conseguem remover ervas daninhas, monitorar plantações e otimizar o uso de água em tempo real.</p>
                 </div>
                 <div class="imagem">
-                    <div class="img-placeholder">
-                        <i class="fa-solid fa-robot"></i>
-                        <span>Robô agrícola inteligente</span>
+                    <div class="agro-svg-wrap">
+                        <svg class="agro-robot-svg" viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" aria-label="Trator robô agrícola autônomo">
+                            <defs>
+                                <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#4ade80" stop-opacity="0.22"/>
+                                    <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                                </radialGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <filter id="glow-strong">
+                                    <feGaussianBlur stdDeviation="5" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <linearGradient id="body-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#0f2418"/>
+                                    <stop offset="100%" stop-color="#061208"/>
+                                </linearGradient>
+                                <linearGradient id="cabin-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#132b1a"/>
+                                    <stop offset="100%" stop-color="#0a1c0e"/>
+                                </linearGradient>
+                                <linearGradient id="wheel-grad" cx="50%" cy="50%" r="50%" id="wheel-grad" gradientUnits="objectBoundingBox">
+                                    <stop offset="0%" stop-color="#1a3d22"/>
+                                    <stop offset="100%" stop-color="#0a150c"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Ground glow -->
+                            <ellipse cx="210" cy="295" rx="155" ry="18" fill="url(#glow-green)" class="ground-glow"/>
+
+                            <!-- === GROUND TRACK === -->
+                            <rect x="50" y="275" width="320" height="8" rx="4" fill="#0d2010" stroke="#4ade8030" stroke-width="1"/>
+                            <!-- Track dashes -->
+                            <g fill="#4ade8040">
+                                <rect x="60" y="277" width="20" height="4" rx="2"/>
+                                <rect x="90" y="277" width="20" height="4" rx="2"/>
+                                <rect x="120" y="277" width="20" height="4" rx="2"/>
+                                <rect x="150" y="277" width="20" height="4" rx="2"/>
+                                <rect x="180" y="277" width="20" height="4" rx="2"/>
+                                <rect x="210" y="277" width="20" height="4" rx="2"/>
+                                <rect x="240" y="277" width="20" height="4" rx="2"/>
+                                <rect x="270" y="277" width="20" height="4" rx="2"/>
+                                <rect x="300" y="277" width="20" height="4" rx="2"/>
+                                <rect x="330" y="277" width="20" height="4" rx="2"/>
+                            </g>
+
+                            <!-- === BIG REAR WHEEL === -->
+                            <circle cx="135" cy="248" r="62" fill="url(#wheel-grad)" stroke="#4ade8050" stroke-width="2"/>
+                            <circle cx="135" cy="248" r="50" fill="none" stroke="#4ade8025" stroke-width="1.5"/>
+                            <!-- Wheel spokes -->
+                            <g stroke="#4ade8060" stroke-width="2.5" stroke-linecap="round" class="rear-wheel-spokes">
+                                <line x1="135" y1="200" x2="135" y2="230"/>
+                                <line x1="135" y1="266" x2="135" y2="296"/>
+                                <line x1="83"  y1="248" x2="113" y2="248"/>
+                                <line x1="157" y1="248" x2="187" y2="248"/>
+                                <line x1="98"  y1="211" x2="118" y2="231"/>
+                                <line x1="152" y1="265" x2="172" y2="285"/>
+                                <line x1="172" y1="211" x2="152" y2="231"/>
+                                <line x1="118" y1="265" x2="98"  y2="285"/>
+                            </g>
+                            <!-- Wheel tread lugs -->
+                            <g fill="#4ade8035" class="rear-wheel-lugs">
+                                <rect x="73"  y="244" width="12" height="8" rx="2" transform="rotate(-20 73 248)"/>
+                                <rect x="188" y="244" width="12" height="8" rx="2" transform="rotate(20 194 248)"/>
+                                <rect x="131" y="183" width="8" height="12" rx="2" transform="rotate(10 135 189)"/>
+                                <rect x="131" y="301" width="8" height="12" rx="2" transform="rotate(-10 135 307)"/>
+                                <rect x="90"  y="200" width="10" height="8" rx="2" transform="rotate(-45 95 204)"/>
+                                <rect x="170" y="290" width="10" height="8" rx="2" transform="rotate(-45 175 294)"/>
+                                <rect x="168" y="200" width="10" height="8" rx="2" transform="rotate(45 173 204)"/>
+                                <rect x="85"  y="290" width="10" height="8" rx="2" transform="rotate(45 90 294)"/>
+                            </g>
+                            <circle cx="135" cy="248" r="12" fill="#0d2010" stroke="#4ade8070" stroke-width="2"/>
+                            <circle cx="135" cy="248" r="5"  fill="#4ade80" filter="url(#glow)"/>
+
+                            <!-- === SMALL FRONT WHEEL === -->
+                            <circle cx="295" cy="261" r="38" fill="url(#wheel-grad)" stroke="#4ade8050" stroke-width="2"/>
+                            <circle cx="295" cy="261" r="28" fill="none" stroke="#4ade8025" stroke-width="1.5"/>
+                            <g stroke="#4ade8060" stroke-width="2" stroke-linecap="round" class="front-wheel-spokes">
+                                <line x1="295" y1="233" x2="295" y2="252"/>
+                                <line x1="295" y1="270" x2="295" y2="289"/>
+                                <line x1="267" y1="261" x2="286" y2="261"/>
+                                <line x1="304" y1="261" x2="323" y2="261"/>
+                                <line x1="275" y1="241" x2="288" y2="254"/>
+                                <line x1="302" y1="268" x2="315" y2="281"/>
+                                <line x1="315" y1="241" x2="302" y2="254"/>
+                                <line x1="288" y1="268" x2="275" y2="281"/>
+                            </g>
+                            <g fill="#4ade8030" class="front-wheel-lugs">
+                                <rect x="257" y="258" width="10" height="6" rx="1.5" transform="rotate(-20 257 261)"/>
+                                <rect x="322" y="258" width="10" height="6" rx="1.5" transform="rotate(20 328 261)"/>
+                                <rect x="292" y="222" width="6"  height="10" rx="1.5"/>
+                                <rect x="292" y="290" width="6"  height="10" rx="1.5"/>
+                            </g>
+                            <circle cx="295" cy="261" r="9" fill="#0d2010" stroke="#4ade8070" stroke-width="2"/>
+                            <circle cx="295" cy="261" r="4" fill="#4ade80" filter="url(#glow)"/>
+
+                            <!-- === TRACTOR BODY === -->
+                            <path d="M155 260 L155 185 L320 185 L335 200 L335 260 Z" fill="url(#body-grad)" stroke="#4ade8040" stroke-width="1.5"/>
+                            <!-- Body panel lines -->
+                            <line x1="155" y1="220" x2="335" y2="220" stroke="#4ade8020" stroke-width="1"/>
+                            <line x1="240" y1="185" x2="240" y2="260" stroke="#4ade8018" stroke-width="1"/>
+                            <!-- Engine block detail -->
+                            <rect x="270" y="200" width="55" height="50" rx="4" fill="#0a1a0d" stroke="#4ade8035" stroke-width="1"/>
+                            <!-- Electric motor symbol -->
+                            <text x="297" y="232" font-family="monospace" font-size="18" fill="#4ade80" text-anchor="middle" filter="url(#glow)" opacity="0.9">⚡</text>
+
+                            <!-- Battery indicator -->
+                            <rect x="160" y="228" width="72" height="18" rx="4" fill="#061008" stroke="#4ade8040" stroke-width="1.2"/>
+                            <rect x="232" y="232" width="5" height="10" rx="2" fill="#4ade8040"/>
+                            <rect x="162" y="230" width="58" height="14" rx="3" fill="#4ade80" class="battery-fill"/>
+                            <text x="191" y="241" font-family="monospace" font-size="8" fill="#020b05" text-anchor="middle" font-weight="bold">100% ⚡</text>
+
+                            <!-- === CABIN === -->
+                            <rect x="160" y="130" width="110" height="60" rx="6" fill="url(#cabin-grad)" stroke="#4ade8055" stroke-width="1.5"/>
+                            <!-- Cabin roof -->
+                            <rect x="155" y="122" width="120" height="16" rx="5" fill="#0f2418" stroke="#4ade8060" stroke-width="1.5"/>
+                            <!-- Windows -->
+                            <rect x="168" y="137" width="40" height="34" rx="4" fill="#0a2010" stroke="#4ade8060" stroke-width="1.2"/>
+                            <rect x="216" y="137" width="44" height="34" rx="4" fill="#0a2010" stroke="#4ade8060" stroke-width="1.2"/>
+                            <!-- Window glow / reflection -->
+                            <rect x="170" y="139" width="36" height="8" rx="2" fill="#4ade8015"/>
+                            <rect x="218" y="139" width="40" height="8" rx="2" fill="#4ade8015"/>
+                            <!-- Sensor strip on cabin top -->
+                            <rect x="158" y="120" width="114" height="6" rx="3" fill="#4ade80" opacity="0.7" filter="url(#glow)" class="sensor-strip"/>
+
+                            <!-- === ROBOT HEAD / SENSOR DOME === -->
+                            <ellipse cx="215" cy="112" rx="28" ry="18" fill="#0d2010" stroke="#4ade8065" stroke-width="1.5"/>
+                            <!-- Camera eyes -->
+                            <circle cx="205" cy="110" r="7" fill="#061008" stroke="#4ade8080" stroke-width="1.2"/>
+                            <circle cx="225" cy="110" r="7" fill="#061008" stroke="#4ade8080" stroke-width="1.2"/>
+                            <!-- Pupils / scanning -->
+                            <circle cx="205" cy="110" r="4" fill="#4ade80" filter="url(#glow-strong)" class="eye-l"/>
+                            <circle cx="225" cy="110" r="4" fill="#4ade80" filter="url(#glow-strong)" class="eye-r"/>
+                            <!-- Antenna -->
+                            <line x1="215" y1="94" x2="215" y2="72" stroke="#4ade8080" stroke-width="1.5"/>
+                            <circle cx="215" cy="70" r="5" fill="#4ade80" filter="url(#glow-strong)" class="antenna-blink"/>
+                            <!-- Radar sweep arc -->
+                            <path d="M215 70 L195 50 A28 28 0 0 1 235 50 Z" fill="#4ade8012" stroke="#4ade8030" stroke-width="0.8" class="radar-sweep"/>
+
+                            <!-- === ROBOTIC ARM (front) === -->
+                            <g class="robot-arm">
+                                <line x1="335" y1="210" x2="370" y2="200" stroke="#4ade8060" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="370" y1="200" x2="390" y2="225" stroke="#4ade8060" stroke-width="2.5" stroke-linecap="round"/>
+                                <!-- Claw / sensor tip -->
+                                <circle cx="392" cy="228" r="6" fill="#061008" stroke="#4ade80" stroke-width="1.5"/>
+                                <line x1="392" y1="222" x2="392" y2="214" stroke="#4ade80" stroke-width="1.5"/>
+                                <line x1="388" y1="234" x2="382" y2="240" stroke="#4ade80" stroke-width="1.5"/>
+                                <line x1="396" y1="234" x2="402" y2="240" stroke="#4ade80" stroke-width="1.5"/>
+                                <!-- sensor dot -->
+                                <circle cx="392" cy="228" r="2.5" fill="#4ade80" filter="url(#glow)" class="sensor-dot"/>
+                            </g>
+
+                            <!-- === GPS / LIDAR DOME TOP === -->
+                            <ellipse cx="260" cy="122" rx="14" ry="8" fill="#0a1a0d" stroke="#4ade8055" stroke-width="1.2"/>
+                            <ellipse cx="260" cy="120" rx="10" ry="5" fill="#4ade8020"/>
+                            <circle  cx="260" cy="120" r="3"  fill="#4ade80" class="lidar-blink" filter="url(#glow)"/>
+
+                            <!-- === DATA STREAM PARTICLES === -->
+                            <g class="data-particles" fill="#4ade80" opacity="0.7">
+                                <circle cx="60"  cy="120" r="2" class="particle p1"/>
+                                <circle cx="80"  cy="145" r="1.5" class="particle p2"/>
+                                <circle cx="45"  cy="165" r="1.5" class="particle p3"/>
+                                <circle cx="100" cy="100" r="1.5" class="particle p4"/>
+                                <circle cx="385" cy="150" r="2" class="particle p5"/>
+                                <circle cx="405" cy="130" r="1.5" class="particle p6"/>
+                                <circle cx="370" cy="170" r="1.5" class="particle p7"/>
+                            </g>
+
+                            <!-- === SIGNAL RINGS (from antenna) === -->
+                            <g class="signal-rings" fill="none" stroke="#4ade80" stroke-linecap="round">
+                                <circle cx="215" cy="70" r="14" stroke-width="0.8" class="ring r1"/>
+                                <circle cx="215" cy="70" r="22" stroke-width="0.6" class="ring r2"/>
+                                <circle cx="215" cy="70" r="30" stroke-width="0.4" class="ring r3"/>
+                            </g>
+
+                            <!-- === EXHAUST / ENERGY LABEL === -->
+                            <rect x="56" y="56" width="88" height="26" rx="8" fill="#061008" stroke="#4ade8050" stroke-width="1"/>
+                            <text x="100" y="73" font-family="'Space Grotesk', sans-serif" font-size="10" fill="#4ade80" text-anchor="middle" font-weight="700">⚡ Zero Emissões</text>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -198,38 +376,38 @@
                 <!-- PAINEL: EMISSÕES -->
                 <div class="grafico-painel ativo" id="painel-emissoes">
                     <div class="barras">
-                        <div class="barra-grupo">
+                            <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:90%"><span class="barra-valor">~45t</span></div>
-                                <div class="barra eletrico" style="height:5%"><span class="barra-valor">~2t</span></div>
+                                <div class="barra diesel" style="height:90%" data-tooltip="Tratores Diesel: ~45t CO₂/ano — equivale a 18.000 km rodados de carro"><span class="barra-valor">~45t</span></div>
+                                <div class="barra eletrico" style="height:5%" data-tooltip="Tratores Elétricos: ~2t CO₂/ano — redução de 96%"><span class="barra-valor">~2t</span></div>
                             </div>
                             <div class="barra-label">Tratores</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:75%"><span class="barra-valor">~38t</span></div>
-                                <div class="barra eletrico" style="height:4%"><span class="barra-valor">~1,5t</span></div>
+                                <div class="barra diesel" style="height:75%" data-tooltip="Colheitadeiras Diesel: ~38t CO₂/ano"><span class="barra-valor">~38t</span></div>
+                                <div class="barra eletrico" style="height:4%" data-tooltip="Colheitadeiras Elétricas: ~1,5t CO₂/ano — redução de 96%"><span class="barra-valor">~1,5t</span></div>
                             </div>
                             <div class="barra-label">Colheitadeiras</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:55%"><span class="barra-valor">~28t</span></div>
-                                <div class="barra eletrico" style="height:3%"><span class="barra-valor">~1t</span></div>
+                                <div class="barra diesel" style="height:55%" data-tooltip="Irrigação Diesel: ~28t CO₂/ano"><span class="barra-valor">~28t</span></div>
+                                <div class="barra eletrico" style="height:3%" data-tooltip="Irrigação Elétrica: ~1t CO₂/ano — energia solar/eólica"><span class="barra-valor">~1t</span></div>
                             </div>
                             <div class="barra-label">Irrigação</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:40%"><span class="barra-valor">~20t</span></div>
-                                <div class="barra eletrico" style="height:3%"><span class="barra-valor">~0,8t</span></div>
+                                <div class="barra diesel" style="height:40%" data-tooltip="Transporte Diesel: ~20t CO₂/ano"><span class="barra-valor">~20t</span></div>
+                                <div class="barra eletrico" style="height:3%" data-tooltip="Transporte Elétrico: ~0,8t CO₂/ano"><span class="barra-valor">~0,8t</span></div>
                             </div>
                             <div class="barra-label">Transporte</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:100%"><span class="barra-valor">~131t</span></div>
-                                <div class="barra eletrico" style="height:7%"><span class="barra-valor">~5t</span></div>
+                                <div class="barra diesel" style="height:100%" data-tooltip="Total Diesel: ~131t CO₂/ano — impacto climático crítico"><span class="barra-valor">~131t</span></div>
+                                <div class="barra eletrico" style="height:7%" data-tooltip="Total Elétrico: ~5t CO₂/ano — 96% menos emissões!"><span class="barra-valor">~5t</span></div>
                             </div>
                             <div class="barra-label">Total/ano</div>
                         </div>
@@ -245,36 +423,36 @@
                     <div class="barras">
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:85%"><span class="barra-valor">R$42k</span></div>
-                                <div class="barra eletrico" style="height:30%"><span class="barra-valor">R$15k</span></div>
+                                <div class="barra diesel" style="height:85%" data-tooltip="Tratores Diesel: R$42.000/ano em combustível e manutenção"><span class="barra-valor">R$42k</span></div>
+                                <div class="barra eletrico" style="height:30%" data-tooltip="Tratores Elétricos: R$15.000/ano — 64% mais barato"><span class="barra-valor">R$15k</span></div>
                             </div>
                             <div class="barra-label">Tratores</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:70%"><span class="barra-valor">R$35k</span></div>
-                                <div class="barra eletrico" style="height:25%"><span class="barra-valor">R$12k</span></div>
+                                <div class="barra diesel" style="height:70%" data-tooltip="Colheitadeiras Diesel: R$35.000/ano"><span class="barra-valor">R$35k</span></div>
+                                <div class="barra eletrico" style="height:25%" data-tooltip="Colheitadeiras Elétricas: R$12.000/ano — 66% mais barato"><span class="barra-valor">R$12k</span></div>
                             </div>
                             <div class="barra-label">Colheitadeiras</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:50%"><span class="barra-valor">R$25k</span></div>
-                                <div class="barra eletrico" style="height:18%"><span class="barra-valor">R$9k</span></div>
+                                <div class="barra diesel" style="height:50%" data-tooltip="Irrigação Diesel: R$25.000/ano em bombeamento"><span class="barra-valor">R$25k</span></div>
+                                <div class="barra eletrico" style="height:18%" data-tooltip="Irrigação Elétrica: R$9.000/ano com energia solar"><span class="barra-valor">R$9k</span></div>
                             </div>
                             <div class="barra-label">Irrigação</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:36%"><span class="barra-valor">R$18k</span></div>
-                                <div class="barra eletrico" style="height:13%"><span class="barra-valor">R$6k</span></div>
+                                <div class="barra diesel" style="height:36%" data-tooltip="Transporte Diesel: R$18.000/ano"><span class="barra-valor">R$18k</span></div>
+                                <div class="barra eletrico" style="height:13%" data-tooltip="Transporte Elétrico: R$6.000/ano — 67% mais barato"><span class="barra-valor">R$6k</span></div>
                             </div>
                             <div class="barra-label">Transporte</div>
                         </div>
                         <div class="barra-grupo">
                             <div class="barra-par">
-                                <div class="barra diesel" style="height:100%"><span class="barra-valor">R$120k</span></div>
-                                <div class="barra eletrico" style="height:35%"><span class="barra-valor">R$42k</span></div>
+                                <div class="barra diesel" style="height:100%" data-tooltip="Total Diesel: R$120.000/ano — custo operacional elevado"><span class="barra-valor">R$120k</span></div>
+                                <div class="barra eletrico" style="height:35%" data-tooltip="Total Elétrico: R$42.000/ano — economia de R$78.000/ano!"><span class="barra-valor">R$42k</span></div>
                             </div>
                             <div class="barra-label">Total/ano</div>
                         </div>
@@ -293,6 +471,31 @@
                 style="width:100%; max-width:820px; margin: 2.5rem auto 0; border-radius: 16px; display:block;"
             >
 
+        </div>
+    </section>
+
+    <!-- IMPACTO GLOBAL COUNTER STRIP -->
+    <section class="impact-counter-strip">
+        <div class="impact-counter-inner">
+            <div class="impact-stat">
+                <div class="impact-val" data-target="1847" data-suffix="">0</div>
+                <div class="impact-label">Fazendas atendidas</div>
+            </div>
+            <div class="impact-divider"></div>
+            <div class="impact-stat">
+                <div class="impact-val" data-target="284" data-prefix="R$" data-suffix="M">R$0M</div>
+                <div class="impact-label">Economizados em diesel</div>
+            </div>
+            <div class="impact-divider"></div>
+            <div class="impact-stat">
+                <div class="impact-val" data-target="12400" data-suffix="t">0t</div>
+                <div class="impact-label">Toneladas de CO₂ evitadas</div>
+            </div>
+            <div class="impact-divider"></div>
+            <div class="impact-stat">
+                <div class="impact-val" data-target="98" data-suffix="%">0%</div>
+                <div class="impact-label">Satisfação dos clientes</div>
+            </div>
         </div>
     </section>
 
