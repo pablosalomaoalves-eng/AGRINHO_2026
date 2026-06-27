@@ -595,14 +595,14 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.setAttribute('aria-label', isLight ? 'Ativar modo escuro' : 'Ativar modo claro');
             btn.title = isLight ? 'Modo escuro' : 'Modo claro';
         }
-        // Update particle canvas opacity dynamically
         document.querySelectorAll('.section-particle-canvas').forEach(c => {
             c.style.opacity = isLight ? '0.28' : '0.60';
         });
         try { localStorage.setItem('campoTema', isLight ? 'light' : 'dark'); } catch(e) {}
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    // Script está no fim do <body>, DOM já está pronto — rodar direto
+    function setup() {
         let saved = null;
         try { saved = localStorage.getItem('campoTema'); } catch(e) {}
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -611,9 +611,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const btn = document.getElementById('theme-toggle');
         if (btn) {
+            // Remover qualquer onclick inline residual
+            btn.removeAttribute('onclick');
             btn.addEventListener('click', () => {
                 applyTheme(!document.body.classList.contains('light-mode'));
             });
         }
-    });
+    }
+
+    // Garantia dupla: roda agora e no DOMContentLoaded caso ainda não tenha disparado
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setup);
+    } else {
+        setup();
+    }
 })();
