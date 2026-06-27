@@ -1047,6 +1047,7 @@ ul   { list-style: none; }
     width: 0%;
     transition: width 0.1s linear;
     box-shadow: 0 0 8px rgba(74,222,128,0.6);
+    pointer-events: none;
 }
 
 /* ============================================================
